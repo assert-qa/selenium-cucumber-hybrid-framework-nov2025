@@ -3,6 +3,7 @@ package helpers;
 import constants.ConstantGlobal;
 import net.datafaker.Faker;
 
+import java.time.Month;
 import java.util.Locale;
 
 public class DataFakerHelper {
@@ -32,5 +33,15 @@ public class DataFakerHelper {
 
     public static void setFaker(Faker faker) {
         DataFakerHelper.faker = faker;
+    }
+
+    public static int getRandomNumber(int min, int max) {
+        return getFaker().number().numberBetween(min, max);
+    }
+
+    public static String getRandomMonth(){
+        int monthNumber = faker.number().numberBetween(1, 13);
+        String month = Month.of(monthNumber).name();
+        return month.charAt(0) + month.substring(1).toLowerCase();
     }
 }
