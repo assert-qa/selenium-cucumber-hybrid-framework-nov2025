@@ -1,10 +1,7 @@
 package pages;
 
 import factory.DriverFactory;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import utils.LogUtils;
 
@@ -14,16 +11,10 @@ import static helpers.PropertiesHelper.loadAllFiles;
 import static keywords.WebUI.*;
 
 public class CartPage extends DriverFactory {
-    WebDriver driver;
 
     private static Properties setUp = loadAllFiles();
 
-    // 1. Constructor of the page class
-    public CartPage(WebDriver driver){
-        this.driver = driver;
-    }
-
-    // 2. By Locators
+    // 1. By Locators
     String cartPage= setUp.getProperty("CART_PAGE");
     String footer = setUp.getProperty("CART_FOOTER");
     String subscriptionLabel = setUp.getProperty("CART_SUBSCRIPTION_LABEL");
@@ -42,7 +33,7 @@ public class CartPage extends DriverFactory {
     String deleteProductButton = setUp.getProperty("DELETE_PRODUCT_BUTTON");
     String cartProductRow = setUp.getProperty("CART_PRODUCT_NOW");
 
-    // 3. Page actions: features (behaviors) of the page in the form of methods
+    // 2. Page actions: features (behaviors) of the page in the form of methods
     public void goToCartPage(){
         clickElement(By.xpath(cartPage));
     }
@@ -175,7 +166,6 @@ public class CartPage extends DriverFactory {
     public void placeOrderButton(){
         clickElement(By.cssSelector(placeOrderButton));
     }
-
 
     // REMOVE PRODUCT FROM CART
     public void clickRemoveBackgroundFromCart(){
