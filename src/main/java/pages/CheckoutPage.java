@@ -13,7 +13,11 @@ import static keywords.WebUI.getWebElements;
 
 public class CheckoutPage extends DriverFactory {
 
-    private static Properties setUp = loadAllFiles();
+    Properties setUp = loadAllFiles();
+
+    CheckoutPage(){
+
+    }
 
     // 1. By Locators
     String deliveryAddress = setUp.getProperty("DELIVERY_ADDRESS");

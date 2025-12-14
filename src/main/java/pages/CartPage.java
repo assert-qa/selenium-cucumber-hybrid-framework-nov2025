@@ -12,7 +12,11 @@ import static keywords.WebUI.*;
 
 public class CartPage extends DriverFactory {
 
-    private static Properties setUp = loadAllFiles();
+   Properties setUp = loadAllFiles();
+
+   CartPage(){
+
+   }
 
     // 1. By Locators
     String cartPage= setUp.getProperty("CART_PAGE");
