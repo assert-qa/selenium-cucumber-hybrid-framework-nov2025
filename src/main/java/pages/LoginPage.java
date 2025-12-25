@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 import java.util.Properties;
 
 import static helpers.PropertiesHelper.loadAllFiles;
-import static keywords.WebUI.clickElement;
+import static keywords.WebUI.*;
 
 public class LoginPage extends DriverFactory {
     Properties setUp = loadAllFiles();
@@ -58,5 +58,29 @@ public class LoginPage extends DriverFactory {
         clickElement(By.xpath(goToLoginButton));
     }
 
+    public String verifyRegisterIsVisible(){
+        if (isElementDisplayed(By.xpath(registerLabel))){
+            return getElementText(By.xpath(registerLabel));
+        } else {
+            return "Register label is not visible";
+        }
+    }
+
+    public void typeUserInformation(String userName, String userEmail){
+        setText(By.xpath(name), userEmail);
+        setText(By.xpath(emailAddress), userEmail);
+    }
+
+    public void clickSignUpButton(){
+        clickElement(By.xpath(signUpButton));
+    }
+
+    public String verifyAccountInformationIsVisible(){
+        if (isElementDisplayed(By.xpath(accountInformationLabel))){
+            return getElementText(By.xpath(accountInformationLabel));
+        } else {
+            return "Account Information is not visible";
+        }
+    }
 
 }
