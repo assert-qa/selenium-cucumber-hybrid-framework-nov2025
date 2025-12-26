@@ -1,5 +1,6 @@
 package keywords;
 
+import com.aventstack.extentreports.Status;
 import constants.ConstantGlobal;
 import factory.DriverManager;
 import helpers.CaptureHelper;
@@ -13,9 +14,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import reports.AllureManager;
+import reports.ExtentTestManager;
 import utils.LogUtils;
 
 import java.awt.*;
@@ -80,7 +83,7 @@ public class WebUI {
         waitForPageLoaded();
         sleep(STEP_TIME);
         LogUtils.info("Verify equals: " + actual + " and " + expected);
-        //ExtentTestManager.logMessage(Status.PASS, "Verify equals: " + actual + " and " + expected);
+        ExtentTestManager.logMessage(Status.PASS, "Verify equals: " + actual + " and " + expected);
         Assert.assertEquals(actual, expected, "Fail. Not match. '" + actual.toString() + "' != '" + expected.toString() + "'");
     }
 
@@ -89,7 +92,7 @@ public class WebUI {
         waitForPageLoaded();
         sleep(STEP_TIME);
         LogUtils.info("Verify equals: " + actual + " and " + expected);
-        //ExtentTestManager.logMessage(Status.PASS, "Verify equals: " + actual + " and " + expected);
+        ExtentTestManager.logMessage(Status.PASS, "Verify equals: " + actual + " and " + expected);
         Assert.assertEquals(actual, expected, message);
     }
 
@@ -113,7 +116,7 @@ public class WebUI {
         DriverManager.getDriver().get(url);
         sleep(STEP_TIME);
         LogUtils.info("Open URL: " + url);
-        //ExtentTestManager.logMessage(Status.PASS, "Open URL: " + url);
+        ExtentTestManager.logMessage(Status.PASS, "Open URL: " + url);
         AllureManager.saveTextLog("Open URL: " + url);
         waitForPageLoaded();
         if (PropertiesHelper.getValue("SCREENSHOT_STEP").equals("yes")) {
@@ -128,7 +131,7 @@ public class WebUI {
         sleep(STEP_TIME);
         getWebElement(by).click();
         LogUtils.info("Click element " + by);
-        //ExtentTestManager.logMessage(Status.PASS, "Click element " + by);
+        ExtentTestManager.logMessage(Status.PASS, "Click element " + by);
 
         if (PropertiesHelper.getValue("SCREENSHOT_STEP").equals("yes")) {
             CaptureHelper.takeScreenshot("clickElement_" + SystemHelper.makeSlug(by.toString()));
@@ -142,7 +145,7 @@ public class WebUI {
         sleep(STEP_TIME);
         getWebElement(by).click();
         LogUtils.info("Click element " + by);
-        //ExtentTestManager.logMessage(Status.PASS, "Click element " + by);
+        ExtentTestManager.logMessage(Status.PASS, "Click element " + by);
 
         if (PropertiesHelper.getValue("SCREENSHOT_STEP").equals("yes")) {
             CaptureHelper.takeScreenshot("clickElement_" + SystemHelper.makeSlug(by.toString()));
@@ -156,7 +159,7 @@ public class WebUI {
         sleep(STEP_TIME);
         getWebElement(by).sendKeys(value);
         LogUtils.info("Set text: " + value + " on element " + by);
-        //ExtentTestManager.logMessage(Status.PASS, "Set text: " + value + " on element " + by);
+        ExtentTestManager.logMessage(Status.PASS, "Set text: " + value + " on element " + by);
 
         if (PropertiesHelper.getValue("SCREENSHOT_STEP").equals("yes")) {
             CaptureHelper.takeScreenshot("setText_" + SystemHelper.makeSlug(by.toString()));
@@ -170,7 +173,7 @@ public class WebUI {
         sleep(STEP_TIME);
         getWebElement(by).sendKeys(value, key);
         LogUtils.info("Set text: " + value + " on element " + by);
-        //ExtentTestManager.logMessage(Status.PASS, "Set text: " + value + " on element " + by);
+        ExtentTestManager.logMessage(Status.PASS, "Set text: " + value + " on element " + by);
 
         if (PropertiesHelper.getValue("SCREENSHOT_STEP").equals("yes")) {
             CaptureHelper.takeScreenshot("setText_" + SystemHelper.makeSlug(by.toString()));
@@ -184,7 +187,7 @@ public class WebUI {
         sleep(STEP_TIME);
         String text = getWebElement(by).getText();
         LogUtils.info("Get text: " + text);
-        //ExtentTestManager.logMessage(Status.PASS, "Get text: " + text);
+        ExtentTestManager.logMessage(Status.PASS, "Get text: " + text);
         return text;
     }
 
@@ -226,7 +229,6 @@ public class WebUI {
         } catch (Throwable error) {
             LogUtils.error("Element not exist. " + by.toString());
             Assert.fail("Element not exist. " + by.toString());
-
         }
     }
 
@@ -287,6 +289,43 @@ public class WebUI {
         } catch (Exception e) {
             LogUtils.info(e.getMessage());
             return false;
+        }
+    }
+
+    @Step("Successfully select: {1} on {0}")
+    public static void selectCheckBox(By by, String value) {
+        WebDriverWait wait = new WebDriverWait(
+                DriverManager.getDriver(), Duration.ofSeconds(EXPLICIT_TIMEOUT), Duration.ofMillis(500));
+
+        WebElement checkBox = wait.until(ExpectedConditions.elementToBeClickable(DriverManager.getDriver().findElement(by)));
+
+        if (value == null || value.equals(checkBox.getAttribute("value"))) {
+            if (!checkBox.isSelected()) {
+                checkBox.click();
+            }
+        }
+    }
+
+    @Step("Successfully select: {0}")
+    public static void selectRadioButton(By by) {
+        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(EXPLICIT_TIMEOUT), Duration.ofMillis(500));
+
+        WebElement radioButton = wait.until(ExpectedConditions.elementToBeClickable(by));
+
+        if (!radioButton.isSelected()) {
+            radioButton.click();
+        }
+    }
+
+    @Step("Successfully select: {1} on {0}")
+    public static void selectDropDown(By by, String value) {
+        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(EXPLICIT_TIMEOUT), Duration.ofMillis(500));
+        WebElement dropDownElement = wait.until(ExpectedConditions.elementToBeClickable(by));
+
+        Select select = new Select(dropDownElement);
+
+        if (!select.getFirstSelectedOption().getText().equalsIgnoreCase(value)) {
+            select.selectByVisibleText(value);
         }
     }
 

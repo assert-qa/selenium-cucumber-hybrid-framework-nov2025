@@ -83,4 +83,20 @@ public class LoginPage extends DriverFactory {
         }
     }
 
+    private void selectGender(String gender){
+        if (gender.equalsIgnoreCase("Mr.")){
+            selectRadioButton(By.xpath(mrGender));
+        } else if (gender.equalsIgnoreCase("Mrs.")){
+            selectRadioButton(By.xpath(mrsGender));
+        }
+    }
+
+    public void fillAccountInformation(String title, String userPassword, String date, String month, String year){
+        selectGender(title);
+        setText(By.xpath(password), userPassword);
+        selectDropDown(By.xpath(days), date);
+        selectDropDown(By.xpath(months), month);
+        selectDropDown(By.xpath(years), year);
+    }
+
 }
