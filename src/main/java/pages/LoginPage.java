@@ -135,4 +135,53 @@ public class LoginPage extends DriverFactory {
     public void clickContinueButton(){
         clickElement(By.xpath(continueButton));
     }
+
+    public String verifyLoggedInAsUserNameIsVisible(String userName){
+        String xpath = String.format("//b[contains(text(), '%s')]", userName);
+        verifyElementVisible(By.xpath(xpath));
+
+        return getElementText(By.xpath(xpath));
+    }
+
+    public void clickDeleteAccountButton(){
+        clickElement(By.xpath(deleteButton));
+    }
+
+    public void loginAccount(String userEmailAddress, String password){
+        setText(By.xpath(createdUserEmail), userEmailAddress);
+        setText(By.xpath(createdUserPassword), password);
+    }
+
+    public void clickLoginButton(){
+        clickElement(By.xpath(loginButton));
+    }
+
+    public String verifyInlineErrorMessage(){
+        if(isElementDisplayed(By.xpath(inLineErrorMessage))){
+            return getElementText(By.xpath(inLineErrorMessage));
+        }else{
+            return "Your email or password is incorrect! is not visible";
+        }
+    }
+
+    public String verifyLoginLabel(){
+        if(isElementDisplayed(By.xpath(loginLabel))){
+            return getElementText(By.xpath(loginLabel));
+        }else{
+            return "Login to your account is not visible";
+        }
+    }
+
+    public void clickLogoutButton(){
+        clickElement(By.xpath(logOutButton));
+    }
+
+    public void deleteAccountButton(){
+        clickElement(By.xpath(deleteAccountButton));
+    }
+    public String verifyAccountDelete(){
+        verifyElementVisible(By.xpath(verifyAccountDeletedLabel));
+
+        return getElementText(By.xpath(verifyAccountDeletedLabel));
+    }
 }
