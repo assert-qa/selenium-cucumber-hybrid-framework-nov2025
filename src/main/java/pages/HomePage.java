@@ -15,7 +15,7 @@ public class HomePage extends DriverFactory {
 
     Properties setUp = loadAllFiles();
 
-    HomePage() {
+    public HomePage() {
 
     }
 
@@ -47,7 +47,7 @@ public class HomePage extends DriverFactory {
     }
 
     public void scrollDownToFooter(){
-        scrollToElement(By.id(footer));
+        scrollToElement(By.id(footer)); // true means scroll to top, false means scroll to bottom
     }
 
     public String verifySubscriptionIsVisible(){
@@ -155,7 +155,8 @@ public class HomePage extends DriverFactory {
     }
 
     public void scrollToTopOfAPage(){
-        scrollToElement(By.id(landingPageImage));
+        WebElement element = getWebElement(By.id(landingPageImage));
+        scrollToElement(element, "true"); // true means scroll to top, false means scroll to bottom
     }
 
     // ROUGH (METHOD HELPER)

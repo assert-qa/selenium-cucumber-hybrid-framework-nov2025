@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>HybridSeleniumFrameworkParallelTesting</artifactId>
+    <artifactId>HybridSeleniumFramework-Cucumber</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -13,6 +13,7 @@
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <selenium.ver>4.32.0</selenium.ver>
+        <cucumber.bom.ver>7.33.0</cucumber.bom.ver>
         <testng.ver>7.11.0</testng.ver>
         <assertJ.ver>4.0.0-M1</assertJ.ver>
         <webdriver.manager.ver>6.1.0</webdriver.manager.ver>
@@ -29,14 +30,13 @@
         <jackson.databind.ver>2.20.0</jackson.databind.ver>
         <jackson.core.ver>2.20.0</jackson.core.ver>
         <java.mail.ver>1.6.2</java.mail.ver>
-        <maven.compiler.ver>3.14.0</maven.compiler.ver>
-        <maven.surefire.ver>3.5.4</maven.surefire.ver>
         <apache.poi.ver>5.4.1</apache.poi.ver>
         <apache.poi.api.ver>5.4.1</apache.poi.api.ver>
         <apache.commons.ver>2.20.0</apache.commons.ver>
         <owner.ver>1.0.12</owner.ver>
         <project.lombok.ver>1.18.42</project.lombok.ver>
         <mysql.conn.ver>9.4.0</mysql.conn.ver>
+
     </properties>
 
     <dependencies>
@@ -167,20 +167,6 @@
             <version>${java.mail.ver}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
-        <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>${maven.compiler.ver}</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
-        <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>${maven.surefire.ver}</version>
-        </dependency>
-
         <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
         <dependency>
             <groupId>org.apache.poi</groupId>
@@ -223,6 +209,17 @@
             <version>${mysql.conn.ver}</version>
         </dependency>
 
+        <!-- Add Cucumber Java and TestNG integration (versions managed by BOM) -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -235,7 +232,7 @@
                     <configuration>
                         <suiteXmlFiles>
                             <!-- Call Suite name -->
-                            <suiteXmlFile>src/test/resources/suites/SuiteParallel_POM.xml</suiteXmlFile>
+                            <suiteXmlFile>..</suiteXmlFile>
                         </suiteXmlFiles>
                         <argLine>
                             -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/1.9.22.1/aspectjweaver-1.9.22.1.jar"
@@ -250,4 +247,16 @@
             </plugins>
         </pluginManagement>
     </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.cucumber</groupId>
+                <artifactId>cucumber-bom</artifactId>
+                <version>${cucumber.bom.ver}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

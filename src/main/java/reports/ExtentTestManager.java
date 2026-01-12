@@ -19,6 +19,18 @@ public class ExtentTestManager {
         return extentTestMap.get((int) Thread.currentThread().getId());
     }
 
+    public static synchronized ExtentTest createTest(String testName) {
+        ExtentTest test = extent.createTest(testName);
+        extentTestMap.put((int) Thread.currentThread().getId(), test);
+        return test;
+    }
+
+    public static synchronized ExtentTest createTest(String testName, String desc) {
+        ExtentTest test = extent.createTest(testName, desc);
+        extentTestMap.put((int) Thread.currentThread().getId(), test);
+        return test;
+    }
+
     public static synchronized ExtentTest saveToReport(String testName, String desc) {
         ExtentTest test = extent.createTest(testName, desc);
         extentTestMap.put((int) Thread.currentThread().getId(), test);

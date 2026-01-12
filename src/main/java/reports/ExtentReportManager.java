@@ -10,7 +10,7 @@ public class ExtentReportManager {
         ExtentSparkReporter reporter = new ExtentSparkReporter("exports/ExtentReport/ExtentReport.html");
         reporter.config().setReportName("Extent Report for Automation Test");
         extentReports.attachReporter(reporter);
-        extentReports.setSystemInfo("Framework Name", "Selenium Java | Mahendra");
+        extentReports.setSystemInfo("Framework Name", "Cucumber Selenium Java | Mahendra");
         extentReports.setSystemInfo("Author", "Mahendra");
         extentReports.setSystemInfo("Version", "1.0");
 

@@ -12,7 +12,7 @@ import static keywords.WebUI.*;
 public class ContactUsPage extends DriverFactory {
     Properties setUp = loadAllFiles();
 
-    ContactUsPage() {
+    public ContactUsPage() {
 
     }
 

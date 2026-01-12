@@ -1,7 +1,10 @@
 package pages;
 
 import factory.DriverFactory;
+import helpers.PropertiesHelper;
+import keywords.WebUI;
 import org.openqa.selenium.By;
+import utils.LogUtils;
 
 import java.util.Properties;
 
@@ -11,12 +14,14 @@ import static keywords.WebUI.*;
 public class LoginPage extends DriverFactory {
     Properties setUp = loadAllFiles();
 
-    LoginPage() {
+    public LoginPage() {
 
     }
 
     // 1. By Locators
     String goToLoginButton = setUp.getProperty("GO_TO_LOGIN_BUTTON");
+    String homePage = setUp.getProperty("HOME_PAGE");
+    String newUserSignUp = setUp.getProperty("NEW_USER_SIGN_UP");
     String registerLabel = setUp.getProperty("REGISTER_LABEL");
     String signUpButton = setUp.getProperty("SIGN_UP_BUTTON");
     String name = setUp.getProperty("USER_NAME");
@@ -51,23 +56,32 @@ public class LoginPage extends DriverFactory {
     String inLineErrorMessage = setUp.getProperty("IN_LINE_ERROR_MESSAGE");
     String logOutButton = setUp.getProperty("LOG_OUT_BUTTON");
     String deleteAccountButton = setUp.getProperty("DELETE_ACCOUNT_BUTTON");
-    String verifyAccountDeletedLabel = setUp.getProperty("VERIFY_ACCOUNT_DELETED_LABEL");
+    String accountDeletedLabel = setUp.getProperty("ACCOUNT_DELETED_LABEL");
+
+    public void openLoginPage(){
+        WebUI.openURL(PropertiesHelper.getValue("URL"));
+        WebUI.maximizeWindow();
+    }
 
     // LOGIN | LOGOUT | REGISTER TEST STEP
     public void goToLoginPage(){
         clickElement(By.xpath(goToLoginButton));
     }
 
+    public boolean verifyHomePageIsVisible(){
+        return isElementDisplayed(By.xpath(homePage));
+    }
+
     public String verifyRegisterIsVisible(){
-        if (isElementDisplayed(By.xpath(registerLabel))){
-            return getElementText(By.xpath(registerLabel));
+        if (isElementDisplayed(By.cssSelector(registerLabel))){
+            return getElementText(By.cssSelector(registerLabel));
         } else {
             return "Register label is not visible";
         }
     }
 
     public void typeUserInformation(String userName, String userEmail){
-        setText(By.xpath(name), userEmail);
+        setText(By.xpath(name), userName);
         setText(By.xpath(emailAddress), userEmail);
     }
 
@@ -85,9 +99,9 @@ public class LoginPage extends DriverFactory {
 
     private void selectGender(String gender){
         if (gender.equalsIgnoreCase("Mr.")){
-            selectRadioButton(By.xpath(mrGender));
+            selectRadioButton(By.id(mrGender));
         } else if (gender.equalsIgnoreCase("Mrs.")){
-            selectRadioButton(By.xpath(mrsGender));
+            selectRadioButton(By.id(mrsGender));
         }
     }
 
@@ -99,9 +113,14 @@ public class LoginPage extends DriverFactory {
         selectDropDown(By.xpath(years), year);
     }
 
-    public void selectCheckBox(){
-        clickElement(By.cssSelector(checkBoxSignUp));
-        clickElement(By.cssSelector(checkBoxReceiveSpecialOffers));
+    public void selectCheckBox(String label) {
+        if (label.equalsIgnoreCase("Sign up for our newsletter!")) {
+            clickElement(By.cssSelector(checkBoxSignUp));
+        } else if (label.equalsIgnoreCase("Receive special offers from our partners!")) {
+            clickElement(By.cssSelector(checkBoxReceiveSpecialOffers));
+        } else {
+            LogUtils.error("Checkbox label not recognized: " + label);
+        }
     }
 
     public void fillAddressInformation(String firstName, String lastName, String company,
@@ -137,10 +156,21 @@ public class LoginPage extends DriverFactory {
     }
 
     public String verifyLoggedInAsUserNameIsVisible(String userName){
-        String xpath = String.format("//b[contains(text(), '%s')]", userName);
-        verifyElementVisible(By.xpath(xpath));
+        // If caller passes "username" (placeholder) or null/empty, check for any logged-in username by prefix
+        String xpath;
+        if (userName == null || userName.trim().isEmpty() || userName.equalsIgnoreCase("username")) {
+            // find element that contains the prefix "Logged in as "
+            xpath = "//*[contains(text(),'Logged in as ')]";
+        } else {
+            // existing behaviour: look for specific username text (keeps current logic)
+            xpath = String.format("//b[contains(text(), '%s')]", userName);
+        }
 
-        return getElementText(By.xpath(xpath));
+        if (isElementDisplayed(By.xpath(xpath))) {
+            return getElementText(By.xpath(xpath));
+        } else {
+            return "User is not logged in";
+        }
     }
 
     public void clickDeleteAccountButton(){
@@ -150,6 +180,33 @@ public class LoginPage extends DriverFactory {
     public void loginAccount(String userEmailAddress, String password){
         setText(By.xpath(createdUserEmail), userEmailAddress);
         setText(By.xpath(createdUserPassword), password);
+    }
+
+    public String verifyNewUserSignupIsVisible() {
+        if (isElementDisplayed(By.xpath(newUserSignUp))) {
+            return getElementText(By.xpath(newUserSignUp));
+        } else {
+            return "New User Signup! text is not visible";
+        }
+    }
+
+    public String verifyAccountDeletedIsVisible() {
+        try {
+            // Wait for element to be visible
+            waitForElementVisible(By.xpath(accountDeletedLabel), 10);
+
+            if (isElementDisplayed(By.xpath(accountDeletedLabel))) {
+                String actualText = getElementText(By.xpath(accountDeletedLabel));
+                LogUtils.info("Account Deleted Label found: " + actualText);
+                return actualText;
+            } else {
+                LogUtils.error("Account Deleted Label is not displayed");
+                return "ACCOUNT DELETED! is not visible";
+            }
+        } catch (Exception e) {
+            LogUtils.error("Error finding Account Deleted Label: " + e.getMessage());
+            return "ACCOUNT DELETED! is not visible";
+        }
     }
 
     public void clickLoginButton(){
@@ -179,9 +236,6 @@ public class LoginPage extends DriverFactory {
     public void deleteAccountButton(){
         clickElement(By.xpath(deleteAccountButton));
     }
-    public String verifyAccountDelete(){
-        verifyElementVisible(By.xpath(verifyAccountDeletedLabel));
 
-        return getElementText(By.xpath(verifyAccountDeletedLabel));
-    }
+
 }

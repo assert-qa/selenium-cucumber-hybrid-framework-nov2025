@@ -40,7 +40,7 @@ public class DataFakerHelper {
     }
 
     public static String getRandomMonth(){
-        int monthNumber = faker.number().numberBetween(1, 13);
+        int monthNumber = getFaker().number().numberBetween(1, 13);
         String month = Month.of(monthNumber).name();
         return month.charAt(0) + month.substring(1).toLowerCase();
     }

@@ -19,6 +19,7 @@ public class PropertiesHelper {
         LinkedList<String> files = new LinkedList<>();
         files.add("src/main/resources/config.properties");
         files.add("src/main/java/objects/automation_exercise.properties");
+        files.add("src/main/resources/cucumber.properties");
 
         try {
             properties = new Properties();

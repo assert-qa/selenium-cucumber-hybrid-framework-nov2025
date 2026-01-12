@@ -15,7 +15,7 @@ public class CheckoutPage extends DriverFactory {
 
     Properties setUp = loadAllFiles();
 
-    CheckoutPage(){
+    public CheckoutPage(){
 
     }
 

@@ -11,7 +11,7 @@ import static keywords.WebUI.*;
 public class PaymentPage extends DriverFactory {
     Properties setUp = loadAllFiles();
 
-    PaymentPage() {
+    public PaymentPage() {
 
     }
 

@@ -35,6 +35,11 @@ public class WebUI {
         PropertiesHelper.loadAllFiles();
     }
 
+    public static void maximizeWindow() {
+        DriverManager.getDriver().manage().window().maximize();
+        LogUtils.info("Window maximized");
+    }
+
     public static void verifyElementVisible(By by) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
@@ -83,7 +88,7 @@ public class WebUI {
         waitForPageLoaded();
         sleep(STEP_TIME);
         LogUtils.info("Verify equals: " + actual + " and " + expected);
-        ExtentTestManager.logMessage(Status.PASS, "Verify equals: " + actual + " and " + expected);
+       // ExtentTestManager.logMessage(Status.PASS, "Verify equals: " + actual + " and " + expected);
         Assert.assertEquals(actual, expected, "Fail. Not match. '" + actual.toString() + "' != '" + expected.toString() + "'");
     }
 
@@ -92,7 +97,7 @@ public class WebUI {
         waitForPageLoaded();
         sleep(STEP_TIME);
         LogUtils.info("Verify equals: " + actual + " and " + expected);
-        ExtentTestManager.logMessage(Status.PASS, "Verify equals: " + actual + " and " + expected);
+        // ExtentTestManager.logMessage(Status.PASS, "Verify equals: " + actual + " and " + expected);
         Assert.assertEquals(actual, expected, message);
     }
 
@@ -116,7 +121,7 @@ public class WebUI {
         DriverManager.getDriver().get(url);
         sleep(STEP_TIME);
         LogUtils.info("Open URL: " + url);
-        ExtentTestManager.logMessage(Status.PASS, "Open URL: " + url);
+     //   ExtentTestManager.logMessage(Status.PASS, "Open URL: " + url);
         AllureManager.saveTextLog("Open URL: " + url);
         waitForPageLoaded();
         if (PropertiesHelper.getValue("SCREENSHOT_STEP").equals("yes")) {
@@ -131,7 +136,7 @@ public class WebUI {
         sleep(STEP_TIME);
         getWebElement(by).click();
         LogUtils.info("Click element " + by);
-        ExtentTestManager.logMessage(Status.PASS, "Click element " + by);
+      //  ExtentTestManager.logMessage(Status.PASS, "Click element " + by);
 
         if (PropertiesHelper.getValue("SCREENSHOT_STEP").equals("yes")) {
             CaptureHelper.takeScreenshot("clickElement_" + SystemHelper.makeSlug(by.toString()));
@@ -145,7 +150,7 @@ public class WebUI {
         sleep(STEP_TIME);
         getWebElement(by).click();
         LogUtils.info("Click element " + by);
-        ExtentTestManager.logMessage(Status.PASS, "Click element " + by);
+     //   ExtentTestManager.logMessage(Status.PASS, "Click element " + by);
 
         if (PropertiesHelper.getValue("SCREENSHOT_STEP").equals("yes")) {
             CaptureHelper.takeScreenshot("clickElement_" + SystemHelper.makeSlug(by.toString()));
@@ -159,7 +164,7 @@ public class WebUI {
         sleep(STEP_TIME);
         getWebElement(by).sendKeys(value);
         LogUtils.info("Set text: " + value + " on element " + by);
-        ExtentTestManager.logMessage(Status.PASS, "Set text: " + value + " on element " + by);
+     //   ExtentTestManager.logMessage(Status.PASS, "Set text: " + value + " on element " + by);
 
         if (PropertiesHelper.getValue("SCREENSHOT_STEP").equals("yes")) {
             CaptureHelper.takeScreenshot("setText_" + SystemHelper.makeSlug(by.toString()));
@@ -173,7 +178,7 @@ public class WebUI {
         sleep(STEP_TIME);
         getWebElement(by).sendKeys(value, key);
         LogUtils.info("Set text: " + value + " on element " + by);
-        ExtentTestManager.logMessage(Status.PASS, "Set text: " + value + " on element " + by);
+      //  ExtentTestManager.logMessage(Status.PASS, "Set text: " + value + " on element " + by);
 
         if (PropertiesHelper.getValue("SCREENSHOT_STEP").equals("yes")) {
             CaptureHelper.takeScreenshot("setText_" + SystemHelper.makeSlug(by.toString()));
@@ -187,7 +192,7 @@ public class WebUI {
         sleep(STEP_TIME);
         String text = getWebElement(by).getText();
         LogUtils.info("Get text: " + text);
-        ExtentTestManager.logMessage(Status.PASS, "Get text: " + text);
+      //  ExtentTestManager.logMessage(Status.PASS, "Get text: " + text);
         return text;
     }
 
@@ -523,4 +528,6 @@ public class WebUI {
         }
 
     }
+
+
 }

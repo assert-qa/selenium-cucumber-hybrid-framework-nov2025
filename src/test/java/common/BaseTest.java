@@ -6,13 +6,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import utils.LogUtils;
 
 public class BaseTest {
 
     public static void createDriver(){
-        WebDriver driver = setupBrowser("chrome");
+        WebDriver driver = setupBrowser(ConstantGlobal.BROWSER);
         DriverManager.setDriver(driver);
     }
 
@@ -32,7 +34,7 @@ public class BaseTest {
 
     public static WebDriver initChromeDriver(){
         WebDriver driver;
-        System.out.println("Launching Chrome browser...");
+        LogUtils.info("Launching Chrome browser...");
 
         ChromeOptions options = new ChromeOptions();
         if (ConstantGlobal.HEADLESS){
@@ -42,15 +44,32 @@ public class BaseTest {
             options.addArguments("--start-maximized");
         }
 
-        driver = new ChromeDriver();
+        driver = new ChromeDriver(options);
         return driver;
     }
 
     public static WebDriver initFirefoxDriver(){
         WebDriver driver;
-        System.out.println("Launching Firefox browser...");
+        LogUtils.info("Launching Firefox browser...");
 
         FirefoxOptions options = new FirefoxOptions();
+        if (ConstantGlobal.HEADLESS){
+            options.addArguments("--headless");
+            options.addArguments("--width=1920");
+            options.addArguments("--height=1080");
+        } else {
+            options.addArguments("--start-maximized");
+        }
+
+        driver = new FirefoxDriver(options);
+        return driver;
+    }
+
+    public static WebDriver initEdgeDriver(){
+        WebDriver driver;
+        LogUtils.info("Launching Edge browser...");
+
+        EdgeOptions options = new EdgeOptions();
         if (ConstantGlobal.HEADLESS){
             options.addArguments("--headless=new");
             options.addArguments("window-size=1920,1080");
@@ -58,23 +77,7 @@ public class BaseTest {
             options.addArguments("--start-maximized");
         }
 
-        driver = new FirefoxDriver();
-        return driver;
-    }
-
-    public static WebDriver initEdgeDriver(){
-        WebDriver driver;
-        System.out.println("Launching Edge browser...");
-
-        ChromeOptions options = new ChromeOptions();
-        if (ConstantGlobal.HEADLESS){
-            options.addArguments("--headless=new");
-            options.addArguments("window-size=1920, 1080");
-        } else {
-            options.addArguments("--start-maximized");
-        }
-
-        driver = new EdgeDriver();
+        driver = new EdgeDriver(options);
         return driver;
     }
 

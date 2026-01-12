@@ -14,7 +14,7 @@ public class CartPage extends DriverFactory {
 
    Properties setUp = loadAllFiles();
 
-   CartPage(){
+   public CartPage(){
 
    }
 
@@ -43,7 +43,7 @@ public class CartPage extends DriverFactory {
     }
 
     public void scrollDown(){
-        scrollToElement(By.cssSelector(footer));
+        scrollToElement(By.cssSelector(footer)); // true means scroll to top, false means scroll to bottom
     }
 
     public String verifySubscriptionLabelIsVisible(){
