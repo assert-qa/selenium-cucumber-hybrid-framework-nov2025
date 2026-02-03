@@ -1,5 +1,6 @@
 package hooks;
 
+import common.BaseTest;
 import factory.DriverManager;
 import helpers.PropertiesHelper;
 import org.openqa.selenium.TakesScreenshot;
@@ -9,7 +10,7 @@ import reports.ExtentTestManager;
 import utils.LogUtils;
 
 
-public class CucumberHooks {
+public class CucumberHooks extends BaseTest {
     private static final String SEPARATOR = "=".repeat(40);
 
     @BeforeAll
@@ -85,6 +86,9 @@ public class CucumberHooks {
 
         DriverManager.quit();
         LogUtils.info(SEPARATOR + "\n");
+
+        // Reset TestContext singleton
+        TestContext.reset();
     }
 
     @BeforeStep

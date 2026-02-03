@@ -7,7 +7,6 @@ import org.testng.annotations.DataProvider;
 @CucumberOptions(
         features = "src/test/java/features/Login/LoginWithValidCredentials.feature",
         glue = {"stepDefinition", "hooks"},
-        tags = "@smokeTest",
         plugin = {
                 "pretty",
                 "html:target/cucumber-reports/LoginWithValidCredentials.html",

@@ -3,7 +3,6 @@ Feature: User Registration
   I want to register an account
   So that I can access the application features
 
-  @smokeTest
   Scenario: Register User
     Given I launch the browser
     When I navigate to url "https://automationexercise.com/"

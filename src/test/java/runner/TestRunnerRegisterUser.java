@@ -6,17 +6,16 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 @CucumberOptions(
-        features = "src/test/java/features", // lokasi load feature file (sekaligus semua)
-        tags = "@smokeTest", // Kontrol test lewat tags, bukan runner #BEST PRACTICE
+        features = "src/test/java/features/Login/RegisterUser.feature",
+        tags = "@smokeTest",
         glue = {"stepDefinition",
-                "common",
                 "hooks"},
         plugin = {
                 "hooks.CucumberReportListener",
                 "pretty",
-                "html:target/cucumber-reports/cucumber.html",
-                "json:target/cucumber-reports/cucumber.json",
-                "junit:target/cucumber-reports/cucumber.xml"
+                "html:target/cucumber-reports/RegisterUser.html",
+                "json:target/cucumber-reports/RegisterUser.json",
+                "junit:target/cucumber-reports/RegisterUser.xml"
         },
         monochrome = true
 )

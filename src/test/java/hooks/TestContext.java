@@ -8,6 +8,7 @@ import pages.*;
 import utils.LogUtils;
 
 public class TestContext {
+    private static TestContext instance;
     private CartPage cartPage;
     private CheckoutPage checkoutPage;
     private ContactUsPage contactUsPage;
@@ -17,8 +18,11 @@ public class TestContext {
     private ProductPage productPage;
 
     public TestContext(){
-        ThreadGuard.protect(new DriverFactory().createDriver());
-        LogUtils.info("Driver initialized in TestContext - " + getDriver());
+        if (instance == null) {
+            instance = this;
+            ThreadGuard.protect(new DriverFactory().createDriver());
+            LogUtils.info("Driver initialized in TestContext - " + getDriver());
+        }
     }
 
     public WebDriver getDriver(){
@@ -51,5 +55,9 @@ public class TestContext {
 
     public ProductPage getProductPage(){
         return (productPage == null) ? productPage = new ProductPage() : productPage;
+    }
+
+    public static void reset() {
+        instance = null;
     }
 }
