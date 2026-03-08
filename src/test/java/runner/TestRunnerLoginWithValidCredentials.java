@@ -6,11 +6,13 @@ import org.testng.annotations.DataProvider;
 
 @CucumberOptions(
         features = "src/test/java/features/Login/LoginWithValidCredentials.feature",
-        glue = {"stepDefinition", "hooks"},
+        glue = {"steps", "hooks"},
         plugin = {
                 "pretty",
                 "html:target/cucumber-reports/LoginWithValidCredentials.html",
-                "json:target/cucumber-reports/LoginWithValidCredentials.json"
+                "json:target/cucumber-reports/LoginWithValidCredentials.json",
+                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
+                "hooks.CucumberReportListener"
         },
         monochrome = true
 )

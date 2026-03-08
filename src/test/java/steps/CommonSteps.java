@@ -1,4 +1,4 @@
-package stepDefinition;
+package steps;
 
 import common.BaseTest;
 import constants.ConstantGlobal;
@@ -10,6 +10,7 @@ import io.cucumber.java.en.When;
 import keywords.WebUI;
 import pages.ContactUsPage;
 import pages.LoginPage;
+import pages.ProductPage;
 import pages.TestCasePage;
 import reports.ExtentTestManager;
 import utils.LogUtils;
@@ -19,6 +20,7 @@ public class CommonSteps {
     private LoginPage loginPage;
     private ContactUsPage contactUsPage;
     private TestCasePage testCasePage;
+    private ProductPage productPage;
     private static String GENERATED_NAME = null;
 
     public CommonSteps(TestContext testContext) {
@@ -27,6 +29,7 @@ public class CommonSteps {
         this.loginPage = testContext.getLoginPage();
         this.contactUsPage = testContext.getContactUsPage();
         this.testCasePage = testContext.getTestCasePage();
+        this.productPage = testContext.getProductPage();
     }
 
     public CommonSteps() {
@@ -73,6 +76,9 @@ public class CommonSteps {
         } else if (buttonName.equalsIgnoreCase("Test Cases")) {
             testCasePage.goToTestCasePage();
             ExtentTestManager.logMessage("Clicked on 'Test Cases' button");
+        } else if (buttonName.equalsIgnoreCase("Products")) {
+            productPage.goToProductPage();
+            ExtentTestManager.logMessage("Clicked on 'Products' button");
         }
     }
 

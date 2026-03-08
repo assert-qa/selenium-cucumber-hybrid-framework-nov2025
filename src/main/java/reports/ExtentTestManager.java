@@ -13,26 +13,25 @@ import java.util.Map;
 
 public class ExtentTestManager {
     static Map<Integer, ExtentTest> extentTestMap = new HashMap<>();
-    static ExtentReports extent = ExtentReportManager.getExtentReports();
 
     public static ExtentTest getTest() {
         return extentTestMap.get((int) Thread.currentThread().getId());
     }
 
     public static synchronized ExtentTest createTest(String testName) {
-        ExtentTest test = extent.createTest(testName);
+        ExtentTest test = ExtentReportManager.getExtentReports().createTest(testName);
         extentTestMap.put((int) Thread.currentThread().getId(), test);
         return test;
     }
 
     public static synchronized ExtentTest createTest(String testName, String desc) {
-        ExtentTest test = extent.createTest(testName, desc);
+        ExtentTest test = ExtentReportManager.getExtentReports().createTest(testName, desc);
         extentTestMap.put((int) Thread.currentThread().getId(), test);
         return test;
     }
 
     public static synchronized ExtentTest saveToReport(String testName, String desc) {
-        ExtentTest test = extent.createTest(testName, desc);
+        ExtentTest test = ExtentReportManager.getExtentReports().createTest(testName, desc);
         extentTestMap.put((int) Thread.currentThread().getId(), test);
         return test;
     }
@@ -59,5 +58,9 @@ public class ExtentTestManager {
 
     public static void logMessage(Status status, String message) {
         getTest().log(status, message);
+    }
+
+    public static ExtentReports getExtentReports() {
+        return ExtentReportManager.getExtentReports();
     }
 }

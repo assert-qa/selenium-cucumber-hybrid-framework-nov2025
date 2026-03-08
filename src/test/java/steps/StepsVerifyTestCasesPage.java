@@ -1,4 +1,4 @@
-package stepDefinition;
+package steps;
 
 import hooks.TestContext;
 import io.cucumber.java.en.Then;
@@ -11,9 +11,15 @@ public class StepsVerifyTestCasesPage {
     private TestContext testContext;
     private TestCasePage testCasePage;
 
+    // Zero-argument constructor as fallback
     public StepsVerifyTestCasesPage(TestContext testContext) {
         this.testContext = testContext;
         this.testCasePage = new TestCasePage();
+    }
+
+    // Zero-argument constructor as fallback
+    public StepsVerifyTestCasesPage() {
+        this(new TestContext());
     }
 
     @Then("I verify user is navigated to test cases page successfully")

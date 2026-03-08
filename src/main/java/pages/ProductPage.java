@@ -49,6 +49,13 @@ public class ProductPage extends DriverFactory {
     String submitReview_1 = setUp.getProperty("SUBMIT_REVIEW_BUTTON_1");
     String submitReview_2 = setUp.getProperty("SUBMIT_REVIEW_BUTTON_2");
     String reviewSuccessMessage = setUp.getProperty("REVIEW_SUCCESS_MESSAGE");
+    // Product detail page
+    String productDetailName = setUp.getProperty("PRODUCT_DETAIL_NAME");
+    String productDetailCategory = setUp.getProperty("PRODUCT_DETAIL_CATEGORY");
+    String productDetailPrice = setUp.getProperty("PRODUCT_DETAIL_PRICE");
+    String productDetailAvailability = setUp.getProperty("PRODUCT_DETAIL_AVAILABILITY");
+    String productDetailCondition = setUp.getProperty("PRODUCT_DETAIL_CONDITION");
+    String productDetailBrand = setUp.getProperty("PRODUCT_DETAIL_BRAND");
 
     // 2. By Methods
     public boolean verifyLandingPage(){
@@ -412,6 +419,47 @@ public class ProductPage extends DriverFactory {
         return getElementText(By.xpath(reviewSuccessMessage));
     }
 
+    // PRODUCT DETAIL PAGE TEST STEP
+    public boolean verifyProductDetailPageIsVisible() {
+        return isElementDisplayed(By.xpath(productInformation));
+    }
+
+    public boolean isProductDetailVisible(String detailType) {
+        String locator = "";
+        switch (detailType.toLowerCase()) {
+            case "product name":
+                locator = productDetailName;
+                break;
+            case "category":
+                locator = productDetailCategory;
+                break;
+            case "price":
+                locator = productDetailPrice;
+                break;
+            case "availability":
+                locator = productDetailAvailability;
+                break;
+            case "condition":
+                locator = productDetailCondition;
+                break;
+            case "brand":
+                locator = productDetailBrand;
+                break;
+            default:
+                LogUtils.error("Unknown detail type: " + detailType);
+                return false;
+        }
+
+        boolean isVisible = isElementDisplayed(By.xpath(locator));
+        if (isVisible) {
+            String detailValue = getElementText(By.xpath(locator));
+            LogUtils.info(detailType + " is visible: " + detailValue);
+        } else {
+            LogUtils.error(detailType + " is not visible");
+        }
+        return isVisible;
+    }
+
     // ROUGH (SUPPORT METHODS)
     public static String capitalizeFirstLetter(String str) {
         if (str == null || str.isEmpty()) {
@@ -436,3 +484,4 @@ public class ProductPage extends DriverFactory {
         return URLDecoder.decode(encodedString, StandardCharsets.UTF_8);
     }
 }
+

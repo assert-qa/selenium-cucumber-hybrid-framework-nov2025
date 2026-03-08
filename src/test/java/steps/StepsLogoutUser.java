@@ -1,4 +1,4 @@
-package stepDefinition;
+package steps;
 
 import hooks.TestContext;
 import io.cucumber.java.en.Then;

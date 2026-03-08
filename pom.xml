@@ -20,7 +20,9 @@
         <log4j2.version>2.24.3</log4j2.version>
         <data.faker.ver>2.4.3</data.faker.ver>
         <extent.report.ver>5.1.2</extent.report.ver>
+        <extent.report.cucumber.ver>1.14.0</extent.report.cucumber.ver>
         <allure.ver>2.35.1</allure.ver>
+        <allure.cucumber7.ver>2.33.0</allure.cucumber7.ver>
         <allure.testng.ver>2.30.0</allure.testng.ver>
         <allure.env.ver>1.0.0</allure.env.ver>
         <monte.ver>0.7.7.0</monte.ver>
@@ -36,6 +38,7 @@
         <owner.ver>1.0.12</owner.ver>
         <project.lombok.ver>1.18.42</project.lombok.ver>
         <mysql.conn.ver>9.4.0</mysql.conn.ver>
+        <aspectj.weaver.ver>1.9.25.1</aspectj.weaver.ver>
 
     </properties>
 
@@ -220,33 +223,78 @@
             <artifactId>cucumber-testng</artifactId>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.weaver.ver}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/tech.grasshopper/extentreports-cucumber7-adapter -->
+        <dependency>
+            <groupId>tech.grasshopper</groupId>
+            <artifactId>extentreports-cucumber7-adapter</artifactId>
+            <version>${extent.report.cucumber.ver}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-cucumber7-jvm -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-cucumber7-jvm</artifactId>
+            <version>${allure.cucumber7.ver}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.2.5</version>
-                    <configuration>
-                        <suiteXmlFiles>
-                            <!-- Call Suite name -->
-                            <suiteXmlFile>..</suiteXmlFile>
-                        </suiteXmlFiles>
-                        <argLine>
-                            -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/1.9.22.1/aspectjweaver-1.9.22.1.jar"
-                        </argLine>
-                        <testFailureIgnore>true</testFailureIgnore>
-                        <systemPropertyVariables>
-                            <!-- for report-->
-                            <allure.results.directory>target/allure-results</allure.results.directory>
-                        </systemPropertyVariables>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <suiteXmlFiles>
+                        <!-- Ganti dengan path testng.xml-->
+                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.weaver.ver}/aspectjweaver-${aspectj.weaver.ver}.jar"
+                    </argLine>
+                    <testFailureIgnore>false</testFailureIgnore>
+                    <systemPropertyVariables>
+                        <allure.results.directory>exports/AllureReport</allure.results.directory>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
+
+
+<!--    <build>-->
+<!--        <pluginManagement>-->
+<!--            <plugins>-->
+<!--                <plugin>-->
+<!--                    <groupId>org.apache.maven.plugins</groupId>-->
+<!--                    <artifactId>maven-surefire-plugin</artifactId>-->
+<!--                    <version>3.2.5</version>-->
+<!--                    <configuration>-->
+<!--                        <suiteXmlFiles>-->
+<!--                            &lt;!&ndash; Call Suite name &ndash;&gt;-->
+<!--                            <suiteXmlFile>..</suiteXmlFile>-->
+<!--                        </suiteXmlFiles>-->
+<!--                        <argLine>-->
+<!--                            -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/1.9.25.1/aspectjweaver-1.9.22.1.jar"-->
+<!--                        </argLine>-->
+<!--                        <testFailureIgnore>true</testFailureIgnore>-->
+<!--                        <systemPropertyVariables>-->
+<!--                            &lt;!&ndash; for report&ndash;&gt;-->
+<!--                            <allure.results.directory>exports/AllureReport</allure.results.directory>-->
+<!--                        </systemPropertyVariables>-->
+<!--                    </configuration>-->
+<!--                </plugin>-->
+<!--            </plugins>-->
+<!--        </pluginManagement>-->
+<!--    </build>-->
 
     <dependencyManagement>
         <dependencies>
@@ -260,3 +308,4 @@
         </dependencies>
     </dependencyManagement>
 </project>
+

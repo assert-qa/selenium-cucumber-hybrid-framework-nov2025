@@ -161,7 +161,7 @@ public class WebUI {
      //   ExtentTestManager.logMessage(Status.PASS, "Open URL: " + url);
         AllureManager.saveTextLog("Open URL: " + url);
         waitForPageLoaded();
-        if (PropertiesHelper.getValue("SCREENSHOT_STEP").equals("yes")) {
+        if (ConstantGlobal.SCREENSHOT_STEP.equals("yes")) {
             CaptureHelper.takeScreenshot("openURL_" + SystemHelper.makeSlug(url));
         }
     }
@@ -175,7 +175,7 @@ public class WebUI {
         LogUtils.info("Click element " + by);
       //  ExtentTestManager.logMessage(Status.PASS, "Click element " + by);
 
-        if (PropertiesHelper.getValue("SCREENSHOT_STEP").equals("yes")) {
+        if (ConstantGlobal.SCREENSHOT_STEP.equals("yes")) {
             CaptureHelper.takeScreenshot("clickElement_" + SystemHelper.makeSlug(by.toString()));
         }
     }
@@ -189,7 +189,7 @@ public class WebUI {
         LogUtils.info("Click element " + by);
      //   ExtentTestManager.logMessage(Status.PASS, "Click element " + by);
 
-        if (PropertiesHelper.getValue("SCREENSHOT_STEP").equals("yes")) {
+        if (ConstantGlobal.SCREENSHOT_STEP.equals("yes")) {
             CaptureHelper.takeScreenshot("clickElement_" + SystemHelper.makeSlug(by.toString()));
         }
     }
@@ -203,7 +203,7 @@ public class WebUI {
         LogUtils.info("Set text: " + value + " on element " + by);
      //   ExtentTestManager.logMessage(Status.PASS, "Set text: " + value + " on element " + by);
 
-        if (PropertiesHelper.getValue("SCREENSHOT_STEP").equals("yes")) {
+        if (ConstantGlobal.SCREENSHOT_STEP.equals("yes")) {
             CaptureHelper.takeScreenshot("setText_" + SystemHelper.makeSlug(by.toString()));
         }
     }
@@ -217,7 +217,7 @@ public class WebUI {
         LogUtils.info("Set text: " + value + " on element " + by);
       //  ExtentTestManager.logMessage(Status.PASS, "Set text: " + value + " on element " + by);
 
-        if (PropertiesHelper.getValue("SCREENSHOT_STEP").equals("yes")) {
+        if (ConstantGlobal.SCREENSHOT_STEP.equals("yes")) {
             CaptureHelper.takeScreenshot("setText_" + SystemHelper.makeSlug(by.toString()));
         }
     }
@@ -319,7 +319,7 @@ public class WebUI {
         JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
         js.executeScript("arguments[0].scrollIntoView(false);", element);
 
-        if (PropertiesHelper.getValue("SCREENSHOT_STEP").equals("yes")) {
+        if (ConstantGlobal.SCREENSHOT_STEP.equals("yes")) {
             CaptureHelper.takeScreenshot("scrollToElement_" + SystemHelper.makeSlug(element.getText()));
         }
     }

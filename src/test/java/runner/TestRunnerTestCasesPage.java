@@ -9,9 +9,12 @@ import org.testng.annotations.Test;
 @CucumberOptions(
         features = "src/test/java/features/Home/TestCasesPage.feature",
         glue = {"stepDefinition", "hooks"},
-        plugin = {"pretty",
+        plugin = {
+                "pretty",
                 "html:target/cucumber-reports/TestCasesPage.html",
-                "json:target/cucumber-reports/TestCasesPage.json"
+                "json:target/cucumber-reports/TestCasesPage.json",
+                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
+                "hooks.CucumberReportListener"
         },
         monochrome = true
 )

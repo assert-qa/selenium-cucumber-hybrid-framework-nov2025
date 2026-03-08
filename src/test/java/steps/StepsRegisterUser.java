@@ -1,10 +1,9 @@
-package stepDefinition;
+package steps;
 
 import hooks.TestContext;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.And;
 import io.cucumber.datatable.DataTable;
-import pages.ContactUsPage;
 import pages.LoginPage;
 import pages.models.RegisterFormData;
 import utils.LogUtils;

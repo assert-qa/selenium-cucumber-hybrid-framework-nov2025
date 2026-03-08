@@ -6,10 +6,12 @@ import org.testng.annotations.DataProvider;
 
 @CucumberOptions(
         features = "src/test/java/features/ContactUs/ContactUsForm.feature",
-        glue = {"stepDefinition", "hooks"},
+        glue = {"steps", "hooks"},
         plugin = {"pretty",
                 "html:target/cucumber-reports/ContactUsForm.html",
-                "json:target/cucumber-reports/ContactUsForm.json"},
+                "json:target/cucumber-reports/ContactUsForm.json",
+                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
+                "hooks.CucumberReportListener"},
         monochrome = true
 )
 public class TestRunnerContactUsForm extends AbstractTestNGCucumberTests {
@@ -19,3 +21,5 @@ public class TestRunnerContactUsForm extends AbstractTestNGCucumberTests {
         return super.scenarios();
     }
 }
+
+

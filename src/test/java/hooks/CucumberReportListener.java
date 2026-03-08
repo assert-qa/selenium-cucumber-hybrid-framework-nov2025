@@ -2,7 +2,19 @@ package hooks;
 
 import io.cucumber.plugin.ConcurrentEventListener;
 import io.cucumber.plugin.event.*;
+import reports.ExtentTestManager;
 import utils.LogUtils;
+import com.aventstack.extentreports.Status;
+import factory.DriverManager;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import constants.ConstantGlobal;
+
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class CucumberReportListener implements ConcurrentEventListener {
     private static final String SEPARATOR = "=".repeat(40);
@@ -23,6 +35,14 @@ public class CucumberReportListener implements ConcurrentEventListener {
         LogUtils.info("TEST RUN STARTED");
         LogUtils.info("Time: " + event.getInstant());
         LogUtils.info(SEPARATOR);
+
+        // Initialize ExtentReport
+        try {
+            ExtentTestManager.getExtentReports();
+            LogUtils.info("ExtentReport initialized successfully");
+        } catch (Exception e) {
+            LogUtils.error("Failed to initialize ExtentReport: " + e.getMessage());
+        }
     }
 
     private void handleTestRunFinished(TestRunFinished event) {
@@ -30,6 +50,21 @@ public class CucumberReportListener implements ConcurrentEventListener {
         LogUtils.info("TEST RUN FINISHED");
         LogUtils.info("Time: " + event.getInstant());
         LogUtils.info(SEPARATOR + "\n");
+
+        // Flush Extent Report
+        try {
+            LogUtils.info("Flushing Extent Report...");
+            if (ExtentTestManager.getExtentReports() != null) {
+                ExtentTestManager.getExtentReports().flush();
+                LogUtils.info("Extent Report flushed successfully");
+                LogUtils.info("Please check the exports/ExtentReport folder for the HTML report");
+            } else {
+                LogUtils.error("ExtentReports instance is null, cannot flush");
+            }
+        } catch (Exception e) {
+            LogUtils.error("Failed to flush Extent Report: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     private void handleTestCaseStarted(TestCaseStarted event) {
@@ -41,13 +76,13 @@ public class CucumberReportListener implements ConcurrentEventListener {
 
     private void handleTestCaseFinished(TestCaseFinished event) {
         TestCase testCase = event.getTestCase();
-        Status status = event.getResult().getStatus();
+        io.cucumber.plugin.event.Status status = event.getResult().getStatus();
 
         LogUtils.info("\nTEST CASE FINISHED: " + testCase.getName());
         LogUtils.info("  Status: " + status.name());
         LogUtils.info("  Duration: " + event.getResult().getDuration().toMillis() + " ms");
 
-        if (status == Status.FAILED) {
+        if (status == io.cucumber.plugin.event.Status.FAILED) {
             Throwable error = event.getResult().getError();
             if (error != null) {
                 LogUtils.error("  Error: " + error.getMessage());
@@ -60,13 +95,16 @@ public class CucumberReportListener implements ConcurrentEventListener {
         TestStep testStep = event.getTestStep();
         if (testStep instanceof PickleStepTestStep) {
             PickleStepTestStep pickleStep = (PickleStepTestStep) testStep;
-            LogUtils.info("  Step: " + pickleStep.getStep().getText());
+            String stepText = pickleStep.getStep().getText();
+            LogUtils.info("  Step: " + stepText);
+
+            // Removed: ExtentReport logging for "Executing step" to avoid duplication
         }
     }
 
     private void handleTestStepFinished(TestStepFinished event) {
         TestStep testStep = event.getTestStep();
-        Status status = event.getResult().getStatus();
+        io.cucumber.plugin.event.Status status = event.getResult().getStatus();
 
         if (testStep instanceof PickleStepTestStep) {
             PickleStepTestStep pickleStep = (PickleStepTestStep) testStep;
@@ -76,11 +114,60 @@ public class CucumberReportListener implements ConcurrentEventListener {
             LogUtils.info("    Status: " + status.name());
             LogUtils.info("    Duration: " + event.getResult().getDuration().toMillis() + " ms");
 
-            if (status == Status.FAILED) {
-                Throwable error = event.getResult().getError();
-                if (error != null) {
-                    LogUtils.error("    Error: " + error.getMessage());
+            // Log step result to ExtentReport
+            try {
+                if (ExtentTestManager.getTest() != null) {
+                    if (status == io.cucumber.plugin.event.Status.PASSED) {
+                        ExtentTestManager.getTest().pass("Step passed: " + stepText);
+                    } else if (status == io.cucumber.plugin.event.Status.FAILED) {
+                        Throwable error = event.getResult().getError();
+                        String errorMsg = error != null ? error.getMessage() : "Unknown error";
+
+                        // Capture screenshot for failed step
+                        try {
+                            if (DriverManager.getDriver() != null) {
+                                TakesScreenshot ts = (TakesScreenshot) DriverManager.getDriver();
+                                byte[] screenshot = ts.getScreenshotAs(OutputType.BYTES);
+
+                                String sanitized = stepText.replaceAll("[^a-zA-Z0-9]", "_");
+                                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd_MM_yyyy_HH_mm_ss");
+                                String timestamp = LocalDateTime.now().format(dtf);
+                                String screenshotName = sanitized + "_FAIL_" + timestamp + ".png";
+
+                                // Absolute path untuk save file
+                                String screenshotPath = ConstantGlobal.SCREENSHOT_PATH + screenshotName;
+
+                                File directory = new File(ConstantGlobal.SCREENSHOT_PATH);
+                                if (!directory.exists()) {
+                                    directory.mkdirs();
+                                }
+
+                                Files.write(Paths.get(screenshotPath), screenshot);
+                                LogUtils.info("    Screenshot saved to: " + screenshotPath);
+
+                                String relativeScreenshotPath = "../screenshots/" + screenshotName;
+
+                                // Log to ExtentReport with screenshot at the failed step
+                                ExtentTestManager.getTest().fail("Step failed: " + stepText)
+                                        .fail(errorMsg)
+                                        .addScreenCaptureFromPath(relativeScreenshotPath);
+                            } else {
+                                ExtentTestManager.getTest().fail("Step failed: " + stepText)
+                                        .fail(errorMsg);
+                            }
+                        } catch (Exception screenshotEx) {
+                            LogUtils.error("    Failed to capture screenshot: " + screenshotEx.getMessage());
+                            ExtentTestManager.getTest().fail("Step failed: " + stepText)
+                                    .fail(errorMsg);
+                        }
+
+                        LogUtils.error("    Error: " + errorMsg);
+                    } else if (status == io.cucumber.plugin.event.Status.SKIPPED) {
+                        ExtentTestManager.getTest().skip("Step skipped: " + stepText);
+                    }
                 }
+            } catch (Exception e) {
+                LogUtils.error("Failed to log step finish to ExtentReport: " + e.getMessage());
             }
         }
     }

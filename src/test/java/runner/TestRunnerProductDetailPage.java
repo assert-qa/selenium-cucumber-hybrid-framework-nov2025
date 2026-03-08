@@ -6,21 +6,20 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 @CucumberOptions(
-        features = "src/test/java/features/Login/RegisterUser.feature",
-        tags = "@smokeTest",
+        features = "src/test/java/features/Product/ProductDetailPage.feature",
         glue = {"steps",
                 "hooks"},
         plugin = {
                 "pretty",
-                "html:target/cucumber-reports/RegisterUser.html",
-                "json:target/cucumber-reports/RegisterUser.json",
+                "html:target/cucumber-reports/LoginWithInvalidCredentials.html",
+                "json:target/cucumber-reports/LoginWithInvalidCredentials.json",
                 "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
                 "hooks.CucumberReportListener"
         },
         monochrome = true
 )
 @Test
-public class TestRunnerRegisterUser extends AbstractTestNGCucumberTests {
+public class TestRunnerProductDetailPage extends AbstractTestNGCucumberTests {
     @DataProvider
     @Override
     public Object[][] scenarios() {

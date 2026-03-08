@@ -1,4 +1,4 @@
-package stepDefinition;
+package steps;
 
 import constants.ConstantGlobal;
 import hooks.TestContext;
