@@ -1,0 +1,13 @@
+Feature: Search Events
+  As a user
+  I want to search events
+  So that I can handle no result cases
+
+  Scenario: User search with invalid keyword
+    Given I launch the browser
+    When I navigate to url "https://eventhub.rahulshettyacademy.com"
+    Then I verify that "Upcoming Events" is visible successfully
+
+    When I enter "XYZ123" in search field
+    And I press enter
+    Then I should see "No events found" message
