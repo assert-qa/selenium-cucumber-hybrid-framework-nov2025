@@ -9,4 +9,5 @@ import lombok.*;
 public class CredentialsData {
     private String userEmail;
     private String userPassword;
+    private String confirmPassword;
 }

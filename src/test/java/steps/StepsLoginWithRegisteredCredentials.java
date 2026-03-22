@@ -8,23 +8,23 @@ import keywords.WebUI;
 import pages.LoginPage;
 import pages.models.CredentialsData;
 
-public class StepsLoginWithValidCredentials {
+public class StepsLoginWithRegisteredCredentials {
     private TestContext testContext;
     private LoginPage loginPage;
 
     private final String validEmail = ConstantGlobal.VALID_EMAIL;
     private final String validPassword = ConstantGlobal.VALID_PASSWORD;
 
-    public StepsLoginWithValidCredentials(TestContext testContext) {
+    public StepsLoginWithRegisteredCredentials(TestContext testContext) {
         this.testContext = testContext;
         this.loginPage = new LoginPage();
     }
 
-    public StepsLoginWithValidCredentials(){
+    public StepsLoginWithRegisteredCredentials(){
         this(new TestContext());
     }
 
-    @When("I enter correct email address and password")
+    @When("I enter registered email address and password")
     public void iEnterCorrectEmailAddressAndPassword() {
         CredentialsData credentialsData = CredentialsData.builder()
                 .userEmail(validEmail)

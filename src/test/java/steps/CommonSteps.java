@@ -7,6 +7,7 @@ import io.cucumber.java.en.When;
 import keywords.WebUI;
 import org.openqa.selenium.By;
 import pages.LoginPage;
+import pages.RegisterPage;
 
 import java.util.Locale;
 import java.util.Properties;
@@ -16,6 +17,7 @@ import static helpers.PropertiesHelper.loadAllFiles;
 public class CommonSteps {
 
     private final LoginPage loginPage = new LoginPage();
+    private final RegisterPage registerPage = new RegisterPage();
     private final Properties setUp = loadAllFiles();
 
     @Given("I launch the browser")
@@ -29,11 +31,15 @@ public class CommonSteps {
         WebUI.openURL(url);
     }
 
-    @Then("I verify that login page is visible successfully")
-    public void iVerifyThatLoginPageIsVisibleSuccessfully() {
-        WebUI.verifyElementVisible(By.xpath(setUp.getProperty("EMAIL")), "Email field is not visible.");
-        WebUI.verifyElementVisible(By.xpath(setUp.getProperty("PASSWORD")), "Password field is not visible.");
-        WebUI.verifyElementVisible(By.xpath(setUp.getProperty("SIGN_IN_BUTTON")), "Sign in button is not visible.");
+    @Then("I verify that {string} is visible successfully")
+    public void iVerifyThatLoginPageIsVisibleSuccessfully(String pageTitle) {
+        String normalizedTitle = pageTitle.trim().toLowerCase(Locale.ROOT);
+
+        switch (normalizedTitle){
+            case "sign in to eventhub" -> WebUI.verifyElementVisible(By.xpath(setUp.getProperty("LOGIN_PAGE_LABEL")), "Sign in to EventHub is not visible.");
+            case "create your account" -> WebUI.verifyElementVisible(By.xpath(setUp.getProperty("REGISTER_PAGE_LABEL")), "Register page label is not visible.");
+            default -> throw new IllegalArgumentException("unsupported page title in common step: " + pageTitle);
+        }
     }
 
     @When("I click {string} button")
@@ -43,6 +49,8 @@ public class CommonSteps {
         switch (normalizedButton) {
             case "sign in", "login" -> loginPage.clickSignInButton();
             case "log out", "logout" -> loginPage.clickLogOutButton();
+            case "register" -> registerPage.goToRegisterPage();
+            case "create account" -> registerPage.createAccountButton();
             default -> throw new IllegalArgumentException("Unsupported button in common step: " + buttonName);
         }
     }

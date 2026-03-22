@@ -10,6 +10,7 @@ public class ConstantGlobal {
 
     public final static String BROWSER = PropertiesHelper.getValue("BROWSER");
     public final static Boolean HEADLESS = Boolean.parseBoolean(PropertiesHelper.getValue("HEADLESS"));
+    public final static String BASE_URL = PropertiesHelper.getValue("BASE_URL");
     public final static String VALID_EMAIL = PropertiesHelper.getValue("VALID_LOGIN_EMAIL");
     public final static String VALID_PASSWORD = PropertiesHelper.getValue("VALID_LOGIN_PASSWORD");
     public final static String STEP_TIME = PropertiesHelper.getValue("STEP_TIME");

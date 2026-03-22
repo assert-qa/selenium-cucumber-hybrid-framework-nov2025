@@ -8,9 +8,52 @@
 
     <test name="Login With Valid Credentials Test">
         <classes>
-            <class name="runner.TestRunnerLoginWithValidCredentials"/>
+            <class name="runner.TestRunnerLoginWithRegisteredCredentials"/>
         </classes>
     </test>
-
-
+    <test name="Login With Valid Credentials Test">
+        <classes>
+            <class name="runner.TestRunnerLoginWithUnregisterCredentials"/>
+        </classes>
+    </test>
+    <test name="Login With Valid Credentials Test">
+        <classes>
+            <class name="runner.TestRunnerRegisterUser"/>
+        </classes>
+    </test>
+    <test name="Login With Valid Credentials Test">
+        <classes>
+            <class name="runner.TestRunnerLoginWithRegisteredCredentials"/>
+        </classes>
+    </test>
+    <test name="Login With Valid Credentials Test">
+        <classes>
+            <class name="runner.TestRunnerLoginWithRegisteredCredentials"/>
+        </classes>
+    </test>
+    <test name="Login With Valid Credentials Test">
+        <classes>
+            <class name="runner.TestRunnerLoginWithRegisteredCredentials"/>
+        </classes>
+    </test>
+    <test name="Login With Valid Credentials Test">
+        <classes>
+            <class name="runner.TestRunnerLoginWithRegisteredCredentials"/>
+        </classes>
+    </test>
+    <test name="Login With Valid Credentials Test">
+        <classes>
+            <class name="runner.TestRunnerLoginWithRegisteredCredentials"/>
+        </classes>
+    </test>
+    <test name="Login With Valid Credentials Test">
+        <classes>
+            <class name="runner.TestRunnerLoginWithRegisteredCredentials"/>
+        </classes>
+    </test>
+    <test name="Login With Valid Credentials Test">
+        <classes>
+            <class name="runner.TestRunnerLogoutUser"/>
+        </classes>
+    </test>
 </suite>

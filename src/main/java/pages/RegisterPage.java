@@ -19,8 +19,10 @@ public class RegisterPage extends DriverFactory {
     String registerEmail = setUp.getProperty("REGISTER_EMAIL");
     String registerPassword = setUp.getProperty("REGISTER_PASSWORD");
     String registerConfirmPassword = setUp.getProperty("REGISTER_CONF_PASSWORD");
-    String registerButton = setUp.getProperty("CREATE_ACCOUNT_BUTTON");
+    String createAccountButton = setUp.getProperty("CREATE_ACCOUNT_BUTTON");
     String registerPage = setUp.getProperty("REGISTER_PAGE");
+    String successLoginLabel = setUp.getProperty("SUCCESS_LOGIN_LABEL");
+    String errorToastMessage = setUp.getProperty("ERROR_TOAST_MESSAGE");
 
     public void goToRegisterPage(){
         WebUI.clickElement(By.xpath(registerPage));
@@ -36,7 +38,14 @@ public class RegisterPage extends DriverFactory {
     }
 
     public void createAccountButton(){
-        WebUI.clickElement(By.xpath(registerButton));
+        WebUI.clickElement(By.xpath(createAccountButton));
     }
 
+    public String getSuccessRegistered(){
+        return WebUI.getElementText(By.xpath(successLoginLabel));
+    }
+
+    public String getErrorToastMessage(){
+        return WebUI.getElementText(By.xpath(errorToastMessage));
+    }
 }

@@ -185,8 +185,17 @@ public class ExcelHelper {
     }
 
 
-    //Hàm này dùng cho trường hợp ít Field trong File Excel
-    public Object[][] getExcelData(String fileName, String sheetName) {
+    private String getCellStringValue(Cell sourceCell) {
+        if (sourceCell == null || sourceCell.getCellType() == CellType.BLANK) {
+            return "";
+        }
+
+        DataFormatter formatter = new DataFormatter();
+        return formatter.formatCellValue(sourceCell).trim();
+    }
+
+
+    public static Object[][] getExcelData(String fileName, String sheetName) {
         Object[][] data = null;
         Workbook workbook = null;
         try {
@@ -203,7 +212,6 @@ public class ExcelHelper {
 
             // load the row
             Row row = sheet.getRow(0);
-
 
             int noOfRows = sheet.getPhysicalNumberOfRows();
             int noOfCols = row.getLastCellNum();
@@ -285,4 +293,90 @@ public class ExcelHelper {
         return data;
     }
 
+    // INSERT NEW REGISTERED USER TO DataUser.xlsx
+    public void appendRegisteredUserCredentials(String excelPath, String sheetName, String email, String password) {
+        Workbook writableWorkbook = null;
+
+        try {
+            File excelFile = new File(excelPath);
+
+            if (excelFile.exists() && excelFile.length() > 0) {
+                try (FileInputStream inputStream = new FileInputStream(excelFile)) {
+                    writableWorkbook = WorkbookFactory.create(inputStream);
+                }
+            } else {
+                writableWorkbook = new XSSFWorkbook();
+            }
+
+            Sheet targetSheet = writableWorkbook.getSheet(sheetName);
+            if (targetSheet == null) {
+                targetSheet = writableWorkbook.createSheet(sheetName);
+            }
+
+            ensureRegisteredUserHeader(targetSheet);
+
+            int nextRowIndex = findNextDataRowIndex(targetSheet);
+            Row dataRow = targetSheet.getRow(nextRowIndex);
+            if (dataRow == null) {
+                dataRow = targetSheet.createRow(nextRowIndex);
+            }
+
+            dataRow.createCell(0).setCellValue(email);
+            dataRow.createCell(1).setCellValue(password);
+
+            try (FileOutputStream outputStream = new FileOutputStream(excelFile)) {
+                writableWorkbook.write(outputStream);
+            }
+        } catch (Exception exception) {
+            throw new RuntimeException("Failed to append registered user credentials to Excel.", exception);
+        } finally {
+            if (writableWorkbook != null) {
+                try {
+                    writableWorkbook.close();
+                } catch (IOException ignored) {
+                }
+            }
+        }
+    }
+
+    // Helper method
+    private void ensureRegisteredUserHeader(Sheet targetSheet) {
+        Row headerRow = targetSheet.getRow(0);
+        if (headerRow == null) {
+            headerRow = targetSheet.createRow(0);
+        }
+
+        Cell emailHeaderCell = headerRow.getCell(0);
+        if (emailHeaderCell == null || emailHeaderCell.getCellType() == CellType.BLANK) {
+            headerRow.createCell(0).setCellValue("EMAIL");
+        }
+
+        Cell passwordHeaderCell = headerRow.getCell(1);
+        if (passwordHeaderCell == null || passwordHeaderCell.getCellType() == CellType.BLANK) {
+            headerRow.createCell(1).setCellValue("PASSWORD");
+        }
+    }
+
+    private int findNextDataRowIndex(Sheet targetSheet) {
+        int lastRowIndex = targetSheet.getLastRowNum();
+
+        if (lastRowIndex < 1) {
+            return 1;
+        }
+
+        for (int rowIndex = lastRowIndex; rowIndex >= 1; rowIndex--) {
+            Row row = targetSheet.getRow(rowIndex);
+            if (row == null) {
+                continue;
+            }
+
+            String emailValue = getCellStringValue(row.getCell(0));
+            String passwordValue = getCellStringValue(row.getCell(1));
+            if (!emailValue.isEmpty() || !passwordValue.isEmpty()) {
+                return rowIndex + 1;
+            }
+        }
+
+        return 1;
+    }
 }

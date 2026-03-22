@@ -36,6 +36,12 @@ public class WebUI {
         PropertiesHelper.loadAllFiles();
     }
 
+    public static String getCurrentUrl() {
+        String url = DriverManager.getDriver().getCurrentUrl();
+        LogUtils.info("Get current URL: " + url);
+        return url;
+    }
+
     public static void maximizeWindow() {
         DriverManager.getDriver().manage().window().maximize();
         LogUtils.info("Window maximized");
