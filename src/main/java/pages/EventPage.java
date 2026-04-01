@@ -17,7 +17,11 @@ public class EventPage extends DriverFactory {
     String eventPage = setUp.getProperty("NAVIGATE_TO_EVENT_PAGE");
     String inputEvent = setUp.getProperty("SEARCH_EVENT_INPUT");
 
+    /*
+     - Book Event
+     - Dynamic Select Event (by event name) when searching for event > verify event details
 
+     */
     public void goToEventPage(){
         WebUI.clickElement(By.xpath(eventPage));
     }
