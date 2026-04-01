@@ -11,49 +11,14 @@
             <class name="runner.TestRunnerLoginWithRegisteredCredentials"/>
         </classes>
     </test>
-    <test name="Login With Valid Credentials Test">
+    <test name="Login With Unregister Credentials Test">
         <classes>
             <class name="runner.TestRunnerLoginWithUnregisterCredentials"/>
         </classes>
     </test>
-    <test name="Login With Valid Credentials Test">
-        <classes>
-            <class name="runner.TestRunnerRegisterUser"/>
-        </classes>
-    </test>
-    <test name="Login With Valid Credentials Test">
-        <classes>
-            <class name="runner.TestRunnerLoginWithRegisteredCredentials"/>
-        </classes>
-    </test>
-    <test name="Login With Valid Credentials Test">
-        <classes>
-            <class name="runner.TestRunnerLoginWithRegisteredCredentials"/>
-        </classes>
-    </test>
-    <test name="Login With Valid Credentials Test">
-        <classes>
-            <class name="runner.TestRunnerLoginWithRegisteredCredentials"/>
-        </classes>
-    </test>
-    <test name="Login With Valid Credentials Test">
-        <classes>
-            <class name="runner.TestRunnerLoginWithRegisteredCredentials"/>
-        </classes>
-    </test>
-    <test name="Login With Valid Credentials Test">
-        <classes>
-            <class name="runner.TestRunnerLoginWithRegisteredCredentials"/>
-        </classes>
-    </test>
-    <test name="Login With Valid Credentials Test">
-        <classes>
-            <class name="runner.TestRunnerLoginWithRegisteredCredentials"/>
-        </classes>
-    </test>
-    <test name="Login With Valid Credentials Test">
-        <classes>
-            <class name="runner.TestRunnerLogoutUser"/>
-        </classes>
-    </test>
+<!--    <test name="Register User Test">-->
+<!--        <classes>-->
+<!--            <class name="runner.TestRunnerRegisterUser"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 </suite>

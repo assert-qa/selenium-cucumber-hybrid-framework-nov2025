@@ -1,9 +1,12 @@
 package hooks;
 
+import constants.ConstantGlobal;
 import factory.DriverFactory;
 import factory.DriverManager;
 import helpers.PropertiesHelper;
+import helpers.UserInfoHelper;
 import io.cucumber.java.*;
+import reports.AllureManager;
 import reports.ExtentTestManager;
 import utils.LogUtils;
 
@@ -16,6 +19,9 @@ public class CucumberHooks {
         LogUtils.info("STARTING TEST SUITE");
         LogUtils.info(SEPARATOR);
         PropertiesHelper.loadAllFiles();
+
+        // ========== ENHANCEMENT: Log user info at suite level ==========
+        LogUtils.info(UserInfoHelper.getUserTestHeader());
     }
 
     @AfterAll
@@ -43,7 +49,17 @@ public class CucumberHooks {
             // Log scenario info to ExtentReport
             if (ExtentTestManager.getTest() != null) {
                 ExtentTestManager.getTest().info("Starting scenario: " + testName);
+
+                // ========== ENHANCEMENT: Log user info to Extent Report ==========
+                ExtentTestManager.getTest().info("Test User: " + ConstantGlobal.VALID_EMAIL);
+                ExtentTestManager.getTest().info("Environment: " + ConstantGlobal.ENV);
+                ExtentTestManager.getTest().info("Account Type: " + UserInfoHelper.getUserAccountType());
             }
+
+            // ========== ENHANCEMENT: Attach user info to Allure Report ==========
+            AllureManager.attachEnvironmentInfo();
+            AllureManager.attachUserAccountInfo();
+
         } catch (Exception e) {
             LogUtils.info("Failed to create ExtentTest: " + e.getMessage());
         }
@@ -69,10 +85,14 @@ public class CucumberHooks {
             if (ExtentTestManager.getTest() != null) {
                 if ("FAILED".equalsIgnoreCase(status)) {
                     ExtentTestManager.getTest().fail("Scenario Failed: " + scenario.getName());
+                    // ========== ENHANCEMENT: Attach summary on failure ==========
+                    AllureManager.attachTestResultSummary(scenario.getName(), "FAILED");
                 } else if ("SKIPPED".equalsIgnoreCase(status) || "UNKNOWN".equalsIgnoreCase(status)) {
                     ExtentTestManager.getTest().skip("Scenario Skipped: " + scenario.getName());
                 } else {
                     ExtentTestManager.getTest().pass("Scenario Passed: " + scenario.getName());
+                    // ========== ENHANCEMENT: Attach summary on pass ==========
+                    AllureManager.attachTestResultSummary(scenario.getName(), "PASSED");
                 }
             }
         } catch (Exception e) {

@@ -1,12 +1,15 @@
 package steps;
 
 import constants.ConstantGlobal;
+import helpers.UserInfoHelper;
 import hooks.TestContext;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import keywords.WebUI;
 import pages.LoginPage;
 import pages.models.CredentialsData;
+import reports.AllureManager;
+import utils.LogUtils;
 
 public class StepsLoginWithRegisteredCredentials {
     private TestContext testContext;
@@ -26,12 +29,19 @@ public class StepsLoginWithRegisteredCredentials {
 
     @When("I enter registered email address and password")
     public void iEnterCorrectEmailAddressAndPassword() {
+        // ========== ENHANCEMENT: Log user account info ==========
+        LogUtils.info("Logging in with account: " + UserInfoHelper.getCurrentUserEmail());
+        LogUtils.info("Account Type: " + UserInfoHelper.getUserAccountType());
+
         CredentialsData credentialsData = CredentialsData.builder()
                 .userEmail(validEmail)
                 .userPassword(validPassword)
                 .build();
 
         loginPage.loginAccount(credentialsData);
+
+        // ========== ENHANCEMENT: Attach user action to Allure ==========
+        AllureManager.attachUserAccountInfo();
     }
 
     @Then("I verify that {string} is visible")

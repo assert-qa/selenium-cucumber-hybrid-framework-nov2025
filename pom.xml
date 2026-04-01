@@ -8,6 +8,35 @@
     <artifactId>HybridSeleniumFramework-Cucumber</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <profiles>
+        <!-- DEV Profile -->
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <env>dev</env>
+            </properties>
+        </profile>
+
+        <!-- STAGING Profile -->
+        <profile>
+            <id>staging</id>
+            <properties>
+                <env>staging</env>
+            </properties>
+        </profile>
+
+        <!-- PROD Profile -->
+        <profile>
+            <id>prod</id>
+            <properties>
+                <env>prod</env>
+            </properties>
+        </profile>
+    </profiles>
+
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
@@ -253,24 +282,29 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
                 <configuration>
+                    <!-- ========== FIXED: MERGE systemPropertyVariables ==========-->
+                    <systemPropertyVariables>
+                        <env>${env}</env>
+                        <allure.results.directory>exports/AllureReport</allure.results.directory>
+                    </systemPropertyVariables>
+
+                    <includes>
+                        <include>**/runner/*Runner.java</include>
+                    </includes>
                     <suiteXmlFiles>
-                        <!-- Ganti dengan path testng.xml-->
                         <suiteXmlFile>testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.weaver.ver}/aspectjweaver-${aspectj.weaver.ver}.jar"
                     </argLine>
                     <testFailureIgnore>false</testFailureIgnore>
-                    <systemPropertyVariables>
-                        <allure.results.directory>exports/AllureReport</allure.results.directory>
-                    </systemPropertyVariables>
                 </configuration>
             </plugin>
         </plugins>
     </build>
 
 
-<!--    <build>-->
+    <!--    <build>-->
 <!--        <pluginManagement>-->
 <!--            <plugins>-->
 <!--                <plugin>-->

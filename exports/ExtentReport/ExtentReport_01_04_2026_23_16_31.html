@@ -35,7 +35,7 @@
 <a href="#"><span class="badge badge-primary">Extent Report for Automation Test</span></a>
 </li>
 <li class="m-r-10">
-<a href="#"><span class="badge badge-primary">Mar 22, 2026 09:34:41 PM</span></a>
+<a href="#"><span class="badge badge-primary">Apr 1, 2026 11:16:31 PM</span></a>
 </li>
 </ul>
 </div>
@@ -67,6 +67,7 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-exclamation-circle"></i></a>
 <ul id="status-toggle" class="dropdown-menu dropdown-md p-v-0">
 <a class="dropdown-item" status="pass" href="#"><span>Pass</span><span class="status success"></span></a>
+<a class="dropdown-item" status="fail" href="#"><span>Fail</span><span class="status danger"></span></a>
 <div class="dropdown-divider"></div>
 <a status="clear" class="dropdown-item" href="#"><span>Clear</span><span class="pull-right"><i class="fa fa-close"></i></span></a>
 </ul>
@@ -74,14 +75,140 @@
 </ul>
 </div>    <div class="test-list-wrapper scrollable">
       <ul class="test-list-item">
-        <li class="test-item"  status="pass" test-id="4"
+        <li class="test-item"  status="fail" test-id="7"
           author=""
           tag=""
           device="">
           <div class="test-detail">
-            <p class="name">User cannot register with an existing email</p>
+            <p class="name">User login with valid email and password</p>
             <p class="text-sm">
-              <span>9:34:43 PM</span> / <span>00:00:06:523</span>
+              <span>11:16:35 PM</span> / <span>00:00:15:111</span>
+              <span class="badge fail-bg log float-right">Fail</span>
+            </p>
+          </div>
+          <div class="test-contents d-none">
+<div class="detail-head">
+<div class="p-v-10">
+<div class="info">
+<h5 class="test-status text-fail">User login with valid email and password</h5>
+<span class='badge badge-success'>04.01.2026 11:16:35 PM</span>
+<span class='badge badge-danger'>04.01.2026 11:16:50 PM</span>
+<span class='badge badge-default'>00:00:15:111</span>
+&middot; <span class='uri-anchor badge badge-default'>#test-id=7</span>
+<span title='Skip to the next failed step' class='badge badge-danger pointer float-right ne ml-1'><i class="fa fa-fast-forward"></i></span>
+<span title='Collapse all nodes' class='badge badge-default pointer float-right ct ml-1'><i class="fa fa-compress"></i></span>
+<span title='Expand all nodes' class='badge badge-default pointer float-right et'><i class="fa fa-expand"></i></span>
+</div>
+</div>
+</div>    <div class="row mb-3"><div class="col-md-3">
+    
+
+<img data-featherlight='../screenshots/I_verify_that__Logged_in_as_user_email__is_visible_FAIL_01_04_2026_23_16_50.png' src="../screenshots/I_verify_that__Logged_in_as_user_email__is_visible_FAIL_01_04_2026_23_16_50.png">
+  
+    
+
+    </div></div>
+<div class="detail-body mt-4">
+<table class="table table-sm">
+  <thead><tr><th class="status-col">Status</th><th class="timestamp-col">Timestamp</th><th class="details-col">Details</th></tr></thead>
+  <tbody>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>11:16:35 PM</td>
+        <td>
+          Starting scenario: User login with valid email and password
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>11:16:35 PM</td>
+        <td>
+          Test User: staging-user@mail.com
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>11:16:35 PM</td>
+        <td>
+          Environment: staging
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>11:16:35 PM</td>
+        <td>
+          Account Type: Staging Account
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log pass-bg">Pass</span></td>
+        <td>11:16:36 PM</td>
+        <td>
+          Step passed: I launch the browser
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log pass-bg">Pass</span></td>
+        <td>11:16:38 PM</td>
+        <td>
+          Step passed: I navigate to url "https://eventhub.rahulshettyacademy.com/login"
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log pass-bg">Pass</span></td>
+        <td>11:16:38 PM</td>
+        <td>
+          Step passed: I verify that "Sign in to EventHub" is visible successfully
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log pass-bg">Pass</span></td>
+        <td>11:16:39 PM</td>
+        <td>
+          Step passed: I enter registered email address and password
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log pass-bg">Pass</span></td>
+        <td>11:16:39 PM</td>
+        <td>
+          Step passed: I click "sign in" button
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log fail-bg">Fail</span></td>
+        <td>11:16:50 PM</td>
+        <td>
+          Step failed: I verify that "Logged in as user email" is visible
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log fail-bg">Fail</span></td>
+        <td>11:16:50 PM</td>
+        <td>
+          Timeout waiting for the element Visible. By.xpath: //span[@id='user-email-display']
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log fail-bg">Fail</span></td>
+        <td>11:16:50 PM</td>
+        <td>
+          Scenario Failed: User login with valid email and password
+        </td>
+      </tr>
+  </tbody>
+</table>
+</div>
+          </div>
+        </li>
+        <li class="test-item"  status="pass" test-id="8"
+          author=""
+          tag=""
+          device="">
+          <div class="test-detail">
+            <p class="name">User login with incorrect email and password</p>
+            <p class="text-sm">
+              <span>11:16:35 PM</span> / <span>00:00:05:569</span>
               <span class="badge pass-bg log float-right">Pass</span>
             </p>
           </div>
@@ -89,11 +216,11 @@
 <div class="detail-head">
 <div class="p-v-10">
 <div class="info">
-<h5 class="test-status text-pass">User cannot register with an existing email</h5>
-<span class='badge badge-success'>03.22.2026 9:34:43 PM</span>
-<span class='badge badge-danger'>03.22.2026 9:34:50 PM</span>
-<span class='badge badge-default'>00:00:06:523</span>
-&middot; <span class='uri-anchor badge badge-default'>#test-id=4</span>
+<h5 class="test-status text-pass">User login with incorrect email and password</h5>
+<span class='badge badge-success'>04.01.2026 11:16:35 PM</span>
+<span class='badge badge-danger'>04.01.2026 11:16:40 PM</span>
+<span class='badge badge-default'>00:00:05:569</span>
+&middot; <span class='uri-anchor badge badge-default'>#test-id=8</span>
 <span title='Skip to the next failed step' class='badge badge-danger pointer float-right ne ml-1'><i class="fa fa-fast-forward"></i></span>
 <span title='Collapse all nodes' class='badge badge-default pointer float-right ct ml-1'><i class="fa fa-compress"></i></span>
 <span title='Expand all nodes' class='badge badge-default pointer float-right et'><i class="fa fa-expand"></i></span>
@@ -105,72 +232,79 @@
   <tbody>
       <tr class="event-row">
         <td><span class="badge log info-bg">Info</span></td>
-        <td>9:34:43 PM</td>
+        <td>11:16:35 PM</td>
         <td>
-          Starting scenario: User cannot register with an existing email
+          Starting scenario: User login with incorrect email and password
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>11:16:35 PM</td>
+        <td>
+          Test User: staging-user@mail.com
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>11:16:35 PM</td>
+        <td>
+          Environment: staging
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>11:16:35 PM</td>
+        <td>
+          Account Type: Staging Account
         </td>
       </tr>
       <tr class="event-row">
         <td><span class="badge log pass-bg">Pass</span></td>
-        <td>9:34:46 PM</td>
+        <td>11:16:36 PM</td>
+        <td>
+          Step passed: I launch the browser
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log pass-bg">Pass</span></td>
+        <td>11:16:38 PM</td>
         <td>
           Step passed: I navigate to url "https://eventhub.rahulshettyacademy.com/login"
         </td>
       </tr>
       <tr class="event-row">
         <td><span class="badge log pass-bg">Pass</span></td>
-        <td>9:34:46 PM</td>
+        <td>11:16:39 PM</td>
         <td>
           Step passed: I verify that "Sign in to EventHub" is visible successfully
         </td>
       </tr>
       <tr class="event-row">
         <td><span class="badge log pass-bg">Pass</span></td>
-        <td>9:34:48 PM</td>
+        <td>11:16:39 PM</td>
         <td>
-          Step passed: I already have a registered user
+          Step passed: I enter unregister email address and password
         </td>
       </tr>
       <tr class="event-row">
         <td><span class="badge log pass-bg">Pass</span></td>
-        <td>9:34:48 PM</td>
+        <td>11:16:39 PM</td>
         <td>
-          Step passed: I click "Register" button
+          Step passed: I click "sign in" button
         </td>
       </tr>
       <tr class="event-row">
         <td><span class="badge log pass-bg">Pass</span></td>
-        <td>9:34:49 PM</td>
+        <td>11:16:40 PM</td>
         <td>
-          Step passed: I verify that "Create your account" is visible successfully
+          Step passed: I verify error "Invalid email or password" is visible
         </td>
       </tr>
       <tr class="event-row">
         <td><span class="badge log pass-bg">Pass</span></td>
-        <td>9:34:49 PM</td>
+        <td>11:16:40 PM</td>
         <td>
-          Step passed: I register with an existing email
-        </td>
-      </tr>
-      <tr class="event-row">
-        <td><span class="badge log pass-bg">Pass</span></td>
-        <td>9:34:49 PM</td>
-        <td>
-          Step passed: I click "Create Account" button
-        </td>
-      </tr>
-      <tr class="event-row">
-        <td><span class="badge log pass-bg">Pass</span></td>
-        <td>9:34:50 PM</td>
-        <td>
-          Step passed: I should see an error message "Email already registered"
-        </td>
-      </tr>
-      <tr class="event-row">
-        <td><span class="badge log pass-bg">Pass</span></td>
-        <td>9:34:50 PM</td>
-        <td>
-          Scenario Passed: User cannot register with an existing email
+          Scenario Passed: User login with incorrect email and password
         </td>
       </tr>
   </tbody>
@@ -192,13 +326,13 @@
 <div class="col-md-3">
 <div class="card"><div class="card-body">
 <p class="m-b-0">Started</p>
-<h3>Mar 22, 2026 09:34:41 PM</h3>
+<h3>Apr 1, 2026 11:16:31 PM</h3>
 </div></div>
 </div>
 <div class="col-md-3">
 <div class="card"><div class="card-body">
 <p class="m-b-0">Ended</p>
-<h3>Mar 22, 2026 09:34:50 PM</h3>
+<h3>Apr 1, 2026 11:16:50 PM</h3>
 </div></div>
 </div>
 <div class="col-md-3">
@@ -210,7 +344,7 @@
 <div class="col-md-3">
 <div class="card"><div class="card-body">
 <p class="m-b-0 text-fail">Tests Failed</p>
-<h3>0</h3>
+<h3>1</h3>
 </div></div>
 </div>
 </div>
@@ -226,12 +360,12 @@
 </div>
 </div>
 <div class="card-footer">
-<div><small data-tooltip='100%'>
+<div><small data-tooltip='50%'>
 <b>1</b> tests passed
 </small>
 </div>
 <div>
-<small data-tooltip='0%'><b>0</b> tests failed,
+<small data-tooltip='50%'><b>1</b> tests failed,
 <b>0</b> skipped, <b data-tooltip='0%'>0</b> others
 </small>
 </div>
@@ -249,10 +383,10 @@
 </div>
 </div>
 <div class="card-footer">
-<div><small data-tooltip='90%'><b>9</b> events passed</small></div>
+<div><small data-tooltip='52%'><b>12</b> events passed</small></div>
 <div>
-<small data-tooltip='0%'><b>0</b> events failed,
-<b data-tooltip='%'>1</b> others
+<small data-tooltip='13%'><b>3</b> events failed,
+<b data-tooltip='%'>8</b> others
 </small>
 </div>
 </div>
@@ -268,7 +402,7 @@
 </div></div>
 <script>
 var timeline = {
-"User cannot register with an existing email":6.523
+"User login with valid email and password":15.111,"User login with incorrect email and password":5.569
 };
 </script>
 <div class="row">
@@ -292,11 +426,43 @@ var timeline = {
 </tr>
 <tr>
 <td>Environment</td>
-<td>dev</td>
+<td>staging</td>
 </tr>
 <tr>
 <td>Version</td>
 <td>1.0</td>
+</tr>
+<tr>
+<td>Test User Email</td>
+<td>staging-user@mail.com</td>
+</tr>
+<tr>
+<td>Test Account Type</td>
+<td>Staging Account</td>
+</tr>
+<tr>
+<td>Test Data Source</td>
+<td>Per Environment - staging</td>
+</tr>
+<tr>
+<td>Operating System</td>
+<td>Windows</td>
+</tr>
+<tr>
+<td>Java Version</td>
+<td>21.0.2</td>
+</tr>
+<tr>
+<td>Report Generated</td>
+<td>01-04-2026 23:16:31</td>
+</tr>
+<tr>
+<td>Headless Mode</td>
+<td>false</td>
+</tr>
+<tr>
+<td>Page Load Timeout (seconds)</td>
+<td>60</td>
 </tr>
 </tbody>
 </table></div>
@@ -308,7 +474,7 @@ var timeline = {
 var statusGroup = {
 parentCount: 5,
 passParent: 1,
-failParent: 0,
+failParent: 1,
 warningParent: 0,
 skipParent: 0,
 childCount: 5,
@@ -324,11 +490,11 @@ warningGrandChild: 0,
 skipGrandChild: 0,
 infoGrandChild: 0,
 eventsCount: 5,
-passEvents: 9,
-failEvents: 0,
+passEvents: 12,
+failEvents: 3,
 warningEvents: 0,
 skipEvents: 0,
-infoEvents: 1
+infoEvents: 8
 };
 </script>        </div>
       </div>
