@@ -26,14 +26,12 @@ public class StepsViewEventDetail {
     @When("I click on any {string} card")
     public void iClickOnAnyEventCard(String eventName) {
         List<WebElement> eventList = eventPage.getEvents();
+        for (WebElement event : eventList) {
+            String actualEventName = event.findElement(By.tagName("h3")).getText();
 
-        for (WebElement events : eventList) {
-            WebElement eventTitle = events.findElement(By.xpath(".//h3"));
-
-            String actualEventName = eventTitle.getText().trim();
-            if (actualEventName.equalsIgnoreCase(eventName)){
-                eventTitle.click();
-                break;
+            if (actualEventName.equalsIgnoreCase(eventName)) {
+                event.click();
+                return;
             }
         }
     }

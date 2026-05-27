@@ -41,3 +41,6 @@ build/
 /src/main/java/keywords/
 /src/main/java/helpers/
 /src/main/resources/env/
+
+.claude/
+.idea/

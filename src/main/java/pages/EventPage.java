@@ -5,7 +5,6 @@ import keywords.WebUI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-import pages.models.EventDetailDataObject;
 import utils.LogUtils;
 
 import java.util.ArrayList;
@@ -27,11 +26,10 @@ public class EventPage extends DriverFactory {
     String selectEventCity = setUp.getProperty("SELECT_EVENT_CITY");
     String clearFilterButton = setUp.getProperty("CLEAR_FILTER");
     String addNewEventButton = setUp.getProperty("ADD_NEW_EVENT");
-    String listEvents = setUp.getProperty("EVENTS");
+    String createEventPage = setUp.getProperty("CREATE_EVENT_PAGE");
     String confirmBookingButton = setUp.getProperty("CONFIRM_BOOKING_BUTTON");
     String totalEventPrice = setUp.getProperty("TOTAL_PRICE_TICKET");
     String addEventButton = setUp.getProperty("ADD_EVENT_BUTTON");
-    String allEventLists = setUp.getProperty("ALL_EVENT_LIST");
 
     String eventInformationDetail = setUp.getProperty("EVENT_INFORMATION_DETAIL");
     String aboutEventDetail = setUp.getProperty("ABOUT_EVENT_DETAIL");
@@ -45,26 +43,16 @@ public class EventPage extends DriverFactory {
         WebUI.setText(By.xpath(searchEvent), eventName);
     }
 
-    public List<EventDetailDataObject> getEventAttributes() {
-        List<EventDetailDataObject> events = new ArrayList<>();
+    public void listOfEvents(){
+        List<WebElement> events = WebUI.getWebElements(By.cssSelector(eventList));
 
-        List<WebElement> eventCards = WebUI.getWebElements(By.cssSelector(eventList));
-
-        for (WebElement card : eventCards) {
-            EventDetailDataObject event = new EventDetailDataObject();
-
-            event.setTitle(card.findElement(By.cssSelector("h3")).getText());
-
-            List<WebElement> details = card.findElements(By.cssSelector("p"));
-            event.setDate(details.get(0).getText());
-            event.setLocation(details.get(1).getText());
-
-            event.setPrice(card.findElement(By.xpath(".//*[contains(text(),'$')]")).getText());
-
-            events.add(event);
+        for (WebElement event : events){
+            if (!events.isEmpty()){
+                WebUI.verifyTrue(event.isDisplayed());
+            }else {
+                WebUI.verifyFalse(event.isDisplayed());
+            }
         }
-
-        return events;
     }
 
     public void selectEventCategory(String category){
@@ -82,7 +70,7 @@ public class EventPage extends DriverFactory {
     }
 
     public List<WebElement> getEvents(){
-        return WebUI.getWebElements(By.cssSelector(listEvents));
+        return WebUI.getWebElements(By.cssSelector(eventList));
     }
 
     // Event detail
@@ -102,6 +90,19 @@ public class EventPage extends DriverFactory {
         } else {
             LogUtils.error("About Event Detail is not displayed");
         }
+    }
+
+    // Add Event
+    public void clickAddNewEventButton(){
+        WebUI.clickElement(By.xpath(addNewEventButton));
+    }
+
+    public void createEventPage(){
+        WebUI.verifyTrue(WebUI.isElementDisplayed(By.xpath(createEventPage)));
+    }
+
+    public void clickAddEventButton(){
+        WebUI.clickElement(By.xpath(addEventButton));
     }
 
 

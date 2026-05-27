@@ -61,6 +61,8 @@ public class CommonSteps {
             case "log out", "logout" -> loginPage.clickLogOutButton();
             case "register" -> registerPage.goToRegisterPage();
             case "create account" -> registerPage.createAccountButton();
+            case "add new event" -> eventPage.clickAddNewEventButton();
+            case "add event" -> eventPage.clickAddEventButton();
             default -> throw new IllegalArgumentException("Unsupported button in common step: " + buttonName);
         }
     }

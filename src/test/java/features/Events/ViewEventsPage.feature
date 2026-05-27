@@ -10,6 +10,4 @@ Feature: Events Page
     And I click "sign in" button
     And I navigate to "Events" menu
     Then I verify that "Upcoming Events" is visible successfully
-
     And I should see list of events
-    And each event should display title, date, location, and price

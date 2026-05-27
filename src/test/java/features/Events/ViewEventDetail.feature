@@ -15,6 +15,6 @@ Feature: My Events Page
     Then I should be redirected to event detail page
     And I should see complete event information
 
-    Example:
-      | eventName |
-      |Dilli Diwali Mela|
+    Examples:
+      | eventName          |
+      | Dilli Diwali Mela  |

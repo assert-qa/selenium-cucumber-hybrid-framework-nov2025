@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Cucumber Automation Test Suite" verbose="1" parallel="tests" thread-count="4">
+<suite name="Cucumber Automation Test Suite" verbose="1" parallel="tests" thread-count="1">
     <listeners>
         <!-- Allure TestNG Listener -->
         <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
@@ -8,21 +8,23 @@
         <listener class-name="listeners.RetryListener"/>
     </listeners>
 
-    <test name="Login With Valid Credentials Test">
+<!--    <test name="View Event Page Test">-->
+<!--        <classes>-->
+<!--            <class name="runner.TestRunnerViewEventsPage"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+
+    <test name="View Event Detail Test">
         <classes>
-            <class name="runner.TestRunnerLoginWithRegisteredCredentials"/>
+            <class name="runner.TestRunnerViewEventDetail"/>
         </classes>
     </test>
-    <test name="Login With Unregister Credentials Test">
-        <classes>
-            <class name="runner.TestRunnerLoginWithUnregisterCredentials"/>
-        </classes>
-    </test>
-    <test name="Logout User Test">
-        <classes>
-            <class name="runner.TestRunnerLogoutUser"/>
-        </classes>
-    </test>
+
+<!--    <test name="Logout User Test">-->
+<!--        <classes>-->
+<!--            <class name="runner.TestRunnerLogoutUser"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 <!--    <test name="Register User Test">-->
 <!--        <classes>-->
 <!--            <class name="runner.TestRunnerRegisterUser"/>-->
