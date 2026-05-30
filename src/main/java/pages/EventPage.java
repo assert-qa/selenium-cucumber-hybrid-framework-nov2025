@@ -137,19 +137,10 @@ public class EventPage extends DriverFactory {
 
     // Filter Event
     public void selectEventCategory(String category){
-        Select dropDown = new Select(WebUI.getWebElement(By.cssSelector(selectEventCategory)));
-        for (WebElement option : dropDown.getOptions()) {
-            String optionText = option.getText().trim();
-            if (optionText.contains(category)) {
-                option.click();
-                return;
-            }
-        }
+        WebUI.selectDropDown(By.cssSelector(selectEventCategory), category);
     }
 
     public void selectEventCity(String city){
-        Select dropDown = new Select(WebUI.getWebElement(By.cssSelector(selectEventCity)));
-        dropDown.selectByVisibleText(city);
+        WebUI.selectDropDown(By.cssSelector(selectEventCity), city);
     }
-
 }

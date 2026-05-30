@@ -42,5 +42,4 @@ build/
 /src/main/java/helpers/
 /src/main/resources/env/
 
-.claude/
 .idea/

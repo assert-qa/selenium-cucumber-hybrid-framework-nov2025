@@ -90,4 +90,15 @@ public class CommonSteps {
     public void i_press_enter() {
         eventPage.pressEnter();
     }
+
+    @When("I select {string} from category dropdown")
+    public void i_select_from_category_dropdown(String category) {
+        eventPage.selectEventCategory(category);
+    }
+
+    @And("I select {string} from city dropdown")
+    public void i_select_from_city_dropdown(String city) {
+        eventPage.selectEventCity(city);
+    }
+
 }
